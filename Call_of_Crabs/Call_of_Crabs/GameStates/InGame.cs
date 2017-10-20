@@ -12,6 +12,7 @@ namespace Call_of_Crabs.GameStates
 {
     class InGame : IGameState
     {
+        private Map map = new Map();
         Camera2D camera;
         Texture2D test;
 
@@ -23,6 +24,7 @@ namespace Call_of_Crabs.GameStates
         public void LoadContent(ContentManager contentManager)
         {
             test = contentManager.Load<Texture2D>("Textures/Kitzler");
+            map.Load(contentManager, "TestMap");
         }
 
         public EGameState Update(GameTime time)
@@ -46,6 +48,7 @@ namespace Call_of_Crabs.GameStates
         {
             batch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, camera.GetTransform());
 
+            map.Draw(batch);
             batch.Draw(test, Vector2.Zero);
 
             batch.End();

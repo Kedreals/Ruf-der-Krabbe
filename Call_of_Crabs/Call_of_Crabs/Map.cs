@@ -53,5 +53,16 @@ namespace Call_of_Crabs
                 }
             }
         }
+
+        public void Draw(SpriteBatch batch)
+        {
+            foreach (Tile tile in Tiles)
+            {
+                if (tile != null)
+                {
+                    tile.Draw(batch);
+                }
+            }
+        }
     }
 }
