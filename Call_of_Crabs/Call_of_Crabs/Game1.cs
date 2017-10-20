@@ -116,9 +116,9 @@ namespace Call_of_Crabs
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            spriteBatch.Begin();
+            
             gameState.Draw(spriteBatch);
-            spriteBatch.End();
+            
 
             base.Draw(gameTime);
         }

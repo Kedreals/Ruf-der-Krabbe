@@ -67,7 +67,8 @@ namespace Call_of_Crabs.GameStates
             ButtonBackground = new Texture2D(graphics, (int)1, (int)1);
             ButtonBackground.SetData(new Color[] { Color.White });
 
-
+            Background = new Texture2D(graphics, 1, 1);
+            Background.SetData(new Color[] { Color.BlueViolet });
         }
 
         public void LoadContent(ContentManager contentManager)
@@ -113,10 +114,12 @@ namespace Call_of_Crabs.GameStates
 
             return EGameState.MainMenu;
         }
-
         
         public void Draw(SpriteBatch batch)
         {
+            batch.Begin();
+
+            batch.Draw(Background, Vector2.Zero);
 
             for (int i = 0; i < (int)Button.Count; ++i)
             {
@@ -129,7 +132,8 @@ namespace Call_of_Crabs.GameStates
 
             batch.Draw(ButtonBackground, Buttons[selected], color);
             batch.DrawString(font, ButtonTexts[selected], Buttons[selected].Location.ToVector2() + TextOffsets[selected], Color.Black);
-            
+
+            batch.End();
         }
     }
 }
