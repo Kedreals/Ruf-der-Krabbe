@@ -17,6 +17,8 @@ namespace Call_of_Crabs
 
     public class Tile
     {
+        public static Vector2 DefaultSize = new Vector2(20, 20);
+
         private Texture2D texture;
 
         private Vector2 position;
@@ -28,7 +30,11 @@ namespace Call_of_Crabs
                 position = value;
                 this.TileRectangle.Location = position.ToPoint();
             } }
-        public Vector2 Size;
+
+        private Vector2 size;
+        public Vector2 Size { get { return size; } set { size = value;
+            TileRectangle.Size = size.ToPoint();
+        } }
         public Rectangle TileRectangle;
         public TileType Type;
         public bool IsHostile;
@@ -36,14 +42,14 @@ namespace Call_of_Crabs
         public Tile(TileType type, Vector2 position, Vector2 size = default(Vector2), bool isHostile = false)
         {
             Type = type;
-            Position = position;
+            this.position = position;
             if (size.Length() > 0)
             {
-                Size = size;
+                this.size = size;
             }
             else
             {
-                Size = new Vector2(20, 20);
+                this.size = DefaultSize;
             }
             IsHostile = isHostile;
 
@@ -53,6 +59,11 @@ namespace Call_of_Crabs
         public void Load(ContentManager contentManager, string filename)
         {
             texture = contentManager.Load<Texture2D>("Textures/" + filename);
+        }
+
+        public void SetTexture(Texture2D tex)
+        {
+            texture = tex;
         }
 
         public void Move(Vector2 vec)
@@ -65,6 +76,11 @@ namespace Call_of_Crabs
         {
             Size *= vec;
             TileRectangle.Size = Size.ToPoint();
+        }
+
+        public void Draw(SpriteBatch batch)
+        {
+            batch.Draw(texture, TileRectangle, Color.White);
         }
     }
 }
