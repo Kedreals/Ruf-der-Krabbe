@@ -94,6 +94,8 @@ namespace Call_of_Crabs
                 currentGameState = EGameState.None;
             }
 
+            Controls.Update(gameTime);
+
             if (currentGameState != previouseGameState)
                 HandleGameState();
 

@@ -32,6 +32,7 @@ namespace Call_of_Crabs.GameStates
         Random rand;
 
         Texture2D ButtonBackground;
+        Texture2D Background;
 
         int selected = 0;
 
@@ -44,7 +45,7 @@ namespace Call_of_Crabs.GameStates
 
             Vector2 size = new Vector2(0, 0);
 
-            for(int i = 0; i < (int)Button.Count; ++i)
+            for (int i = 0; i < (int)Button.Count; ++i)
             {
                 ButtonTexts[i] = ((Button)i).ToString();
                 Vector2 mesure = font.MeasureString(ButtonTexts[i]);
@@ -52,7 +53,7 @@ namespace Call_of_Crabs.GameStates
                     size = mesure;
             }
 
-            for(int i = 0; i < (int)Button.Count; ++i)
+            for (int i = 0; i < (int)Button.Count; ++i)
             {
                 Vector2 pos = new Vector2((float)rand.NextDouble() * (float)(graphics.PresentationParameters.BackBufferWidth - size.X),
                                           (float)rand.NextDouble() * (float)(graphics.PresentationParameters.BackBufferHeight - size.Y));
@@ -64,7 +65,9 @@ namespace Call_of_Crabs.GameStates
             }
 
             ButtonBackground = new Texture2D(graphics, (int)1, (int)1);
-            ButtonBackground.SetData(new Color[]{ Color.DarkOrange});
+            ButtonBackground.SetData(new Color[] { Color.White });
+
+
         }
 
         public void LoadContent(ContentManager contentManager)
@@ -78,25 +81,40 @@ namespace Call_of_Crabs.GameStates
         {
             t += (float)time.ElapsedGameTime.TotalSeconds;
 
-            float cost = (float)Math.Cos(t)/2.0f + 0.5f;
+            float cost = (float)Math.Cos(t) / 2.0f + 0.5f;
             color = Color.Lerp(Color.Lerp(Color.Red, Color.Blue, cost), Color.Lerp(Color.Blue, Color.Green, cost), cost);
 
             KeyboardState state = Keyboard.GetState();
 
-            if(state.IsKeyDown(Keys.Down))
+            if (Controls.GetKey(Controls.EKey.Down).HasJustBeenPressed())
             {
                 selected += 1;
                 selected = selected % (int)Button.Count;
             }
-            else if(state.IsKeyDown(Keys.Up))
+            else if (Controls.GetKey(Controls.EKey.Up).HasJustBeenPressed())
             {
                 selected += (int)Button.Count - 1;
                 selected = selected % (int)Button.Count;
             }
 
+            if (Controls.GetKey(Controls.EKey.Confirm).HasJustBeenPressed())
+            {
+                switch (selected)
+                {
+                    case (int)Button.StartGame:
+                        return EGameState.InGame;
+                    case (int)Button.Quit:
+                        return EGameState.None;
+
+                    default:
+                        return EGameState.None;
+                }
+            }
+
             return EGameState.MainMenu;
         }
 
+        
         public void Draw(SpriteBatch batch)
         {
 
@@ -109,8 +127,9 @@ namespace Call_of_Crabs.GameStates
                 batch.DrawString(font, ButtonTexts[i], Buttons[i].Location.ToVector2() + TextOffsets[i], Color.Black);
             }
 
-            batch.Draw(ButtonBackground, Buttons[selected], Color.White);
-            batch.DrawString(font, ButtonTexts[selected], Buttons[selected].Location.ToVector2() + TextOffsets[selected], color);
+            batch.Draw(ButtonBackground, Buttons[selected], color);
+            batch.DrawString(font, ButtonTexts[selected], Buttons[selected].Location.ToVector2() + TextOffsets[selected], Color.Black);
+            
         }
     }
 }

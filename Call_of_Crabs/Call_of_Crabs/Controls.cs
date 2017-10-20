@@ -10,15 +10,44 @@ namespace Call_of_Crabs
 {
     public static class Controls
     {
-        public static ControlKey Up = new ControlKey(Keys.W);
-        public static ControlKey Down = new ControlKey(Keys.S);
-        public static ControlKey Right = new ControlKey(Keys.D);
-        public static ControlKey Left = new ControlKey(Keys.A);
+        public enum EKey
+        {
+            None = -1,
 
-        public static ControlKey Jump = new ControlKey(Keys.Space);
+            Up,
+            Down,
+            Right,
+            Left,
 
-        public static ControlKey Confirm = new ControlKey(Keys.Enter);
-        
+            Jump,
+            Confirm,
+
+            Count
+        }
+
+        private static ControlKey[] keys = new ControlKey[(int)EKey.Count]
+            {
+                new ControlKey(Keys.W),
+                new ControlKey(Keys.S),
+                new ControlKey(Keys.D),
+                new ControlKey(Keys.A),
+                new ControlKey(Keys.Space),
+                new ControlKey(Keys.Enter),
+            };
+
+        public static ControlKey GetKey(EKey key)
+        {
+            if (key <= EKey.None || key >= EKey.Count)
+                return null;
+
+            return keys[(int)key];
+        }
+
+        public static void Update(GameTime gTime)
+        {
+            for (int i = 0; i < (int)EKey.Count; ++i)
+                keys[i].Update(gTime);
+        }
     }
 
     public class ControlKey
