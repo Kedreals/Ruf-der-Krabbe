@@ -94,6 +94,8 @@ namespace Call_of_Crabs
                 currentGameState = EGameState.None;
             }
 
+            Controls.Update(gameTime);
+
             if (currentGameState != previouseGameState)
                 HandleGameState();
 
@@ -114,9 +116,9 @@ namespace Call_of_Crabs
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            spriteBatch.Begin();
+            
             gameState.Draw(spriteBatch);
-            spriteBatch.End();
+            
 
             base.Draw(gameTime);
         }
