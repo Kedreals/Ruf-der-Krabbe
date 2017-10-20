@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Call_of_Crabs.GameStates;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -11,6 +12,11 @@ namespace Call_of_Crabs
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+
+        EGameState currentGameState = EGameState.MainMenu;
+        EGameState previouseGameState = EGameState.None;
+
+        IGameState gameState;
 
         public Game1()
         {
@@ -53,6 +59,29 @@ namespace Call_of_Crabs
             // TODO: Unload any non ContentManager content here
         }
 
+        private void HandleGameState()
+        {
+            switch(currentGameState)
+            {
+                case EGameState.MainMenu:
+                    gameState = new MainMenu();
+                    break;
+                case EGameState.InGame:
+                    gameState = new InGame();
+                    break;
+                default:
+                    Exit();
+                    gameState = null;
+                    break;
+            }
+
+            if(gameState != null)
+            {
+                gameState.LoadContent(Content);
+                gameState.Initialize(GraphicsDevice);
+            }
+        }
+
         /// <summary>
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
@@ -61,9 +90,18 @@ namespace Call_of_Crabs
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+            {
+                currentGameState = EGameState.None;
+            }
 
-            // TODO: Add your update logic here
+            if (currentGameState != previouseGameState)
+                HandleGameState();
+
+            if (gameState != null)
+            {
+                previouseGameState = currentGameState;
+                currentGameState = gameState.Update(gameTime);
+            }
 
             base.Update(gameTime);
         }
@@ -76,7 +114,9 @@ namespace Call_of_Crabs
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            spriteBatch.Begin();
+            gameState.Draw(spriteBatch);
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
