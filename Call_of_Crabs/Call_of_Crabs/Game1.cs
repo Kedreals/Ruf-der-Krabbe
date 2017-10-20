@@ -14,6 +14,7 @@ namespace Call_of_Crabs
 
         public Game1()
         {
+            //dööp
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
