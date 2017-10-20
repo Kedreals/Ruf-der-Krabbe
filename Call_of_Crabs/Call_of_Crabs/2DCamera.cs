@@ -14,6 +14,8 @@ namespace Call_of_Crabs
         float m_scale = 1;
         GraphicsDevice m_device;
 
+        Vector2 m_size;
+
         public Vector2 Position
         {
             get { return m_pos; }
@@ -23,7 +25,19 @@ namespace Call_of_Crabs
         public float Scale
         {
             get { return m_scale; }
-            set { m_scale = value; }
+            set
+            {
+                m_scale = value;
+                m_size = new Vector2(m_device.PresentationParameters.BackBufferWidth, m_device.PresentationParameters.BackBufferHeight) / m_scale;
+            }
+        }
+
+        public Rectangle GetVisibilityRectangle()
+        {
+            Vector2 upperLeft = new Vector2();
+            upperLeft -= m_size / 2.0f;
+            upperLeft += m_pos;
+            return new Rectangle(upperLeft.ToPoint(), m_size.ToPoint());
         }
 
         public Camera2D(GraphicsDevice device)
@@ -36,16 +50,6 @@ namespace Call_of_Crabs
             return Matrix.CreateTranslation(new Vector3(m_pos.X, m_pos.Y, 0)) *
                                          Matrix.CreateScale(new Vector3(m_scale, m_scale, 1)) *
                                          Matrix.CreateTranslation(new Vector3(m_device.Viewport.Width * 0.5f, m_device.Viewport.Height * 0.5f, 0));
-        }
-
-        public void Test(SpriteBatch batch)
-        {
-            Rectangle r = new Rectangle((int)(1.0f/m_scale * (-m_device.PresentationParameters.BackBufferWidth / 2)), (int)(1.0f/m_scale * (-m_device.PresentationParameters.BackBufferHeight / 2)), 
-                (int)(1.0f/m_scale *( m_device.PresentationParameters.BackBufferWidth /* 2*/)), (int)(1.0f/m_scale * (m_device.PresentationParameters.BackBufferHeight /* 2*/)));
-            Texture2D t = new Texture2D(m_device, 1, 1);
-            t.SetData(new Color[] { Color.Black });
-
-            batch.Draw(t, r, Color.White);
         }
     }
 }
