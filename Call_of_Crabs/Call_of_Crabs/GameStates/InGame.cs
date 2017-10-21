@@ -19,7 +19,9 @@ namespace Call_of_Crabs.GameStates
 
         private KritzlerEnemy kritzler = new KritzlerEnemy(new Rectangle(15, 15, 70, 70), new Rectangle(0, 0, 100, 100));
 
-        Camera2D camera;
+        private Camera2D camera;
+
+        private Background background;
 
         public void Initialize(GraphicsDevice graphics)
         {
@@ -45,6 +47,7 @@ namespace Call_of_Crabs.GameStates
 
         public void LoadContent(ContentManager contentManager)
         {
+            background = new Background(contentManager, new string[] { "WaterBackgroundTexture", "FishBackgroundTexture" });
             map.Load(contentManager, "TestMap");
             player.Load(contentManager,"");
             kritzler.Load(contentManager, "");
@@ -70,6 +73,8 @@ namespace Call_of_Crabs.GameStates
         public void Draw(SpriteBatch batch)
         {
             batch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, camera.GetTransform());
+
+            background.Draw(batch,camera);
 
             map.Draw(batch);
             kritzler.Draw(batch);
