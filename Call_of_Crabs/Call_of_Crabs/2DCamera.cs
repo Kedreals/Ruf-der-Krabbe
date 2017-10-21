@@ -14,6 +14,7 @@ namespace Call_of_Crabs
         float m_scale = 1;
         GraphicsDevice m_device;
 
+        Vector2 m_baseSize;
         Vector2 m_size;
 
         public Vector2 Position
@@ -28,7 +29,7 @@ namespace Call_of_Crabs
             set
             {
                 m_scale = value;
-                m_size = new Vector2(m_device.PresentationParameters.BackBufferWidth, m_device.PresentationParameters.BackBufferHeight) / m_scale;
+                m_size = m_baseSize / m_scale;
             }
         }
 
@@ -40,9 +41,30 @@ namespace Call_of_Crabs
             return new Rectangle(upperLeft.ToPoint(), m_size.ToPoint());
         }
 
+        public void SetVisibilityContainedIn(Rectangle rectangle)
+        {
+            if (m_size.X > rectangle.Size.X)
+                Scale *= (float)m_size.X / rectangle.Size.X;
+            if (m_size.Y > rectangle.Size.Y)
+                Scale *= m_size.Y / rectangle.Size.Y;
+
+
+            if (Position.X - 0.5f*m_size.X < rectangle.Left)
+                Position += new Vector2(rectangle.Left - (Position.X-0.5f*m_size.X), 0);
+            if (Position.X + 0.5f*m_size.X > rectangle.Right)
+                Position += new Vector2(rectangle.Right - (Position.X+0.5f*m_size.X), 0);
+            if (Position.Y-0.5f*m_size.Y < rectangle.Top)
+                Position += new Vector2(0, rectangle.Top - (Position.Y-0.5f*m_size.Y));
+            if (Position.Y + 0.5f*m_size.Y > rectangle.Bottom)
+                Position += new Vector2(0, rectangle.Bottom - (Position.Y+0.5f*m_size.Y));
+        }
+
         public Camera2D(GraphicsDevice device)
         {
             m_device = device;
+            m_baseSize = device.Viewport.Bounds.Size.ToVector2();
+            Scale = 1;
+            Position = new Vector2();
         }
 
         public Matrix GetTransform()
