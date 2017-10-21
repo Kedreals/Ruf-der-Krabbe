@@ -49,5 +49,10 @@ namespace Call_of_Crabs
         {
             batch.Draw(m_frames[frame], destination, color);
         }
+
+        public void Draw(SpriteBatch batch, Rectangle dest, Rectangle? source, Color color, float rotation, Vector2 origin, SpriteEffects effect, float layerDepth)
+        {
+            batch.Draw(m_frames[frame], dest, source, color, rotation, origin, effect, layerDepth);
+        }
     }
 }

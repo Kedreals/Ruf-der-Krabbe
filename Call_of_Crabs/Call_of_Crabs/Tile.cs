@@ -12,12 +12,13 @@ namespace Call_of_Crabs
     public enum TileType
     {
         InnerTile,
-        SurfaceTile
+        SurfaceTile,
+        ShellTile
     }
 
     public class Tile
     {
-        public static Vector2 DefaultSize = new Vector2(20, 20);
+        public static Vector2 DefaultSize = new Vector2(60, 60);
 
         private Texture2D texture;
 

@@ -26,7 +26,7 @@ namespace Call_of_Crabs
 
             Texture2D texSurface = contentManager.Load<Texture2D>("Textures/SurfaceTileTexture");
             Texture2D texInner = contentManager.Load<Texture2D>("Textures/InnerTileTexture");
-            //Texture2D texShell = contentManager.Load<Texture2D>("Texture/ShellTiletexture");
+            Texture2D texShell = contentManager.Load<Texture2D>("Textures/ShellTileTexture");
 
             Tiles = new Tile[bitmap.Height * bitmap.Width];
 
@@ -38,11 +38,11 @@ namespace Call_of_Crabs
 
                     if (c.ToVector3().Length() == 0)
                     {
-                        TileType t = TileType.InnerTile;
+                        TileType t = TileType.SurfaceTile;
 
-                        if (i != 0 && color[(i - 1)*bitmap.Height + j].ToVector3().Length() != 0)
+                        if (i != 0 && color[(i - 1)*bitmap.Height + j] != Color.White)
                         {
-                            t = TileType.SurfaceTile;
+                            t = TileType.InnerTile;
                         }
 
                         Tiles[i * bitmap.Height + j] = new Tile(t, new Vector2(j * Tile.DefaultSize.X, i*Tile.DefaultSize.Y));
@@ -55,6 +55,11 @@ namespace Call_of_Crabs
                                 Tiles[i * bitmap.Height + j].SetTexture(texSurface);
                                 break;
                         }
+                    }
+                    else if (c == Color.Red)
+                    {
+                        Tiles[i * bitmap.Height + j] = new Tile(TileType.ShellTile, new Vector2(j * Tile.DefaultSize.X, i * Tile.DefaultSize.Y), isHostile: true, damage: 10);
+                        Tiles[i * bitmap.Height + j].SetTexture(texShell);
                     }
                 }
             }

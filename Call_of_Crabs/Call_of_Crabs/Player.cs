@@ -76,7 +76,7 @@ namespace Call_of_Crabs
                 Position += new Vector2(0, 1f);
             if (Controls.GetKey(Controls.EKey.Left).IsPressed())
             {
-                SetAnimations(-1);
+                SetAnimations(1);
                 Position += new Vector2(-1f, 0);
             }
             else if (Controls.GetKey(Controls.EKey.Right).IsPressed())
@@ -110,7 +110,8 @@ namespace Call_of_Crabs
             switch (currentweapon)
             {
                 case weapon.revolver:
-                    Revolvertexture.Draw(batch, sprite, Color.White);
+                    if (faces == facing.right) Revolvertexture.Draw(batch, sprite, Color.White);
+                    else Revolvertexture.Draw(batch, sprite, null, Color.White, 0, new Vector2(sprite.Width,0), SpriteEffects.FlipHorizontally, 0);
                     break;
 
                 case weapon.kanone:
