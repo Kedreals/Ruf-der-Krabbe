@@ -47,7 +47,7 @@ namespace Call_of_Crabs
 
         public Matrix GetTransform()
         {
-            return Matrix.CreateTranslation(new Vector3(m_pos.X, m_pos.Y, 0)) *
+            return Matrix.CreateTranslation(new Vector3(-m_pos.X, -m_pos.Y, 0)) *
                                          Matrix.CreateScale(new Vector3(m_scale, m_scale, 1)) *
                                          Matrix.CreateTranslation(new Vector3(m_device.Viewport.Width * 0.5f, m_device.Viewport.Height * 0.5f, 0));
         }
