@@ -125,7 +125,7 @@ namespace Call_of_Crabs
             m_Characters.Add(new KritzlerEnemy());
             m_Characters[0].Load(content, "");
             m_Characters[0].Position = new Vector2(700, 450);
-            m_Paths.Add(new Path(new Vector2[] { new Vector2(700, 450), new Vector2(900, 450), new Vector2(900,250) }, new float[] { 1, 1.0f, 1.0f }));
+            m_Paths.Add(new Path(new Vector2[] { new Vector2(700, 450), new Vector2(900, 450), new Vector2(900,250) }));
         }
 
         public void Update(GameTime time)
