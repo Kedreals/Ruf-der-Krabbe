@@ -20,6 +20,9 @@ namespace Call_of_Crabs
         private Vector2[,] m_Paths;
         private float[] m_t;
         private int[] m_forwardBackward;
+
+        public List<Character> List { get { return m_Characters.ToList(); } }
+
         
         public EnemyHandler(ContentManager content, Level level)
         {
