@@ -52,7 +52,7 @@ namespace Call_of_Crabs
         public void Jump(GameTime time)
         {
             currjumpduration += (float)time.ElapsedGameTime.TotalSeconds;
-            float dy = 2*jumpduration*jumpduration/jumpheight*(currjumpduration-jumpduration);
+            float dy = 2 * (jumpheight / (jumpduration * jumpduration)) * (currjumpduration - jumpduration);
 
             Position += new Vector2(0, dy)*(float)time.ElapsedGameTime.TotalSeconds;
 
