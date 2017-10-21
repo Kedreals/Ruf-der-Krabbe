@@ -18,15 +18,16 @@ namespace Call_of_Crabs
         public Texture2D texture;
         public Vector2 offset;
 
+        private Vector2 position;
+
         public float scale = 1;
 
         public Vector2 Position
         {
-            get { return new Vector2(collision.X, collision.Y); }
+            get { return position; }
             set
             {
-                collision.Location = value.ToPoint();
-                sprite.Location = collision.Location + offset.ToPoint();
+                position = value;
             }
         }
 
@@ -46,6 +47,7 @@ namespace Call_of_Crabs
             offset = (sprite.Location - collision.Location).ToVector2();
             collision = basecollision;
             sprite = basesprite;
+            Position = new Vector2(0, 0);
         }
 
 
@@ -69,6 +71,11 @@ namespace Call_of_Crabs
             if (Controls.GetKey(Controls.EKey.Jump).IsPressed())
             { }
 
+            collision.Location = position.ToPoint();
+            sprite.Location = collision.Location + offset.ToPoint();
+
+            //schwerkraft
+            Position += new Vector2(0, 0.5f);
         }
 
         public void Draw(SpriteBatch batch)
@@ -76,5 +83,33 @@ namespace Call_of_Crabs
             batch.Draw(texture, sprite, Color.White);
         }
 
+
+        public void Collide(Map map)
+        {
+            foreach (Tile tile in map.Tiles)
+            {
+                if (tile != null)
+                {
+                    Rectangle t;
+
+                    Rectangle.Intersect(ref collision, ref tile.TileRectangle, out t);
+
+                    if (t.Width < t.Height)
+                    {
+                        Position -= new Vector2(t.Width, 0);
+                    }
+                    else
+                    {
+                        Position -= new Vector2(0, t.Height);
+                    }
+
+                    collision.Location = position.ToPoint();
+                    sprite.Location = collision.Location + offset.ToPoint();
+                }
+            }
+
+
+            
+        }
     }
 }

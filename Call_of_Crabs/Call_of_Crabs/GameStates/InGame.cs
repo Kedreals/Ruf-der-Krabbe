@@ -27,7 +27,7 @@ namespace Call_of_Crabs.GameStates
         {
             test = contentManager.Load<Texture2D>("Textures/Kitzler");
             map.Load(contentManager, "TestMap");
-            player.Load(contentManager, "PlayerKrabbTexture1");
+            player.Load(contentManager, "RevolverKrabbeTexture1");
         }
 
         public EGameState Update(GameTime time)
@@ -46,6 +46,8 @@ namespace Call_of_Crabs.GameStates
                 camera.Scale *= 0.99f;
             */
             player.Update(time);
+
+            player.Collide(map);
 
             return EGameState.InGame;
         }
