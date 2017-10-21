@@ -40,7 +40,10 @@ namespace Call_of_Crabs
         private float threshold = 0;
 
         protected float jumpheight = 70f;
-        protected float jumpcount = 0;
+        protected float currjumpduration = 0f;
+        protected float currjumpheight = 0;
+        protected int jumpcount = 0;
+        protected bool isJumping = false;
 
         public Vector2 Position
         {
@@ -105,6 +108,9 @@ namespace Call_of_Crabs
 
                     Rectangle.Intersect(ref collision, ref tile.TileRectangle, out t);
 
+                    if(t.Height == 0 && t.Width == 0)
+                        continue;
+
                     if (t.Width < t.Height)
                     {
                         int sign = Math.Sign(Position.X - tile.Position.X);
@@ -129,11 +135,17 @@ namespace Call_of_Crabs
                             {
                                 Position = Position + sign * new Vector2(0, t.Height);
                                 jumpcount = 0;
+                                isJumping = false;
                             }
                         }
                         else
                         {
+                            if (sign < 0)
+                            {
+                                jumpcount = 0;
+                            }
                             Position = Position + sign * new Vector2(0, t.Height);
+                            isJumping = false;
                         }
                     }
 
