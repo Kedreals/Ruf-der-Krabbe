@@ -12,9 +12,9 @@ namespace Call_of_Crabs
     public class Player : Character
     {
        
-        public Texture2D Revolvertexture;
-        public Texture2D Kanonetexture;
-        public Texture2D Seesterntexture;
+        public Animation Revolvertexture;
+        public Animation Kanonetexture;
+        public Animation Seesterntexture;
 
 
         enum weapon
@@ -35,22 +35,59 @@ namespace Call_of_Crabs
 
         public override void Load(ContentManager contentManager,string filename)
         {
-            Revolvertexture = contentManager.Load<Texture2D>("Textures/" + "RevolverKrabbeTexture1");
-            
-            Kanonetexture = contentManager.Load<Texture2D>("Textures/" + "KanonenKrabbeTexture1");
-            Seesterntexture = contentManager.Load<Texture2D>("Textures/" + "SeesternKrabbeTexture1");
+            Revolvertexture = new Animation(contentManager, "RevolverKrabbeTexture", 3, 3.0f);
+            Kanonetexture = new Animation(contentManager, "KanonenKrabbeTexture", 3, 3.0f);
+            Seesterntexture = new Animation(contentManager, "SeesternKrabbeTexture", 3, 3.0f);
+
+            SetAnimations(0);
         }
         
+        private void SetAnimations(int forwardBackward)
+        {
+            if(forwardBackward == 0)
+            {
+                Revolvertexture.StopPlaying = true;
+                Kanonetexture.StopPlaying = true;
+                Seesterntexture.StopPlaying = true;
+            }
+            if(forwardBackward > 0)
+            {
+                Revolvertexture.PlayForward = true;
+                Kanonetexture.PlayForward = true;
+                Seesterntexture.PlayForward = true;
+            }
+            if(forwardBackward < 0)
+            {
+                Revolvertexture.PlayBackward = true;
+                Kanonetexture.PlayBackward = true;
+                Seesterntexture.PlayBackward = true;
+            }
+        }
+
         public override void Update(GameTime time)
         {
+            Revolvertexture.Update(time);
+            Kanonetexture.Update(time);
+            Seesterntexture.Update(time);
+
             if (Controls.GetKey(Controls.EKey.Up).IsPressed())
                 Position += new Vector2(0, -1);
             if (Controls.GetKey(Controls.EKey.Down).IsPressed())
                 Position += new Vector2(0, 1f);
             if (Controls.GetKey(Controls.EKey.Left).IsPressed())
+            {
+                SetAnimations(1);
                 Position += new Vector2(-1f, 0);
-            if (Controls.GetKey(Controls.EKey.Right).IsPressed())
+            }
+            else if (Controls.GetKey(Controls.EKey.Right).IsPressed())
+            {
+                SetAnimations(1);
                 Position += new Vector2(1f, 0);
+            }
+            else
+            {
+                SetAnimations(0);
+            }
 
             if (Controls.GetKey(Controls.EKey.firstweapon).IsPressed())
                 currentweapon = weapon.revolver;
@@ -73,16 +110,18 @@ namespace Call_of_Crabs
             switch (currentweapon)
             {
                 case weapon.revolver:
-                    if (faces == facing.right) batch.Draw(Revolvertexture, sprite, Color.White);
-                    else batch.Draw(Revolvertexture, sprite, null, Color.White, 0, new Vector2(sprite.Width,0), SpriteEffects.FlipHorizontally, 0);
+                    if (faces == facing.right) Revolvertexture.Draw(batch, sprite, Color.White);
+                    else Revolvertexture.Draw(batch, sprite, null, Color.White, 0, new Vector2(sprite.Width,0), SpriteEffects.FlipHorizontally, 0);
                     break;
 
                 case weapon.kanone:
-                    batch.Draw(Kanonetexture, sprite, Color.White);
+                    if (faces == facing.right) Kanonetexture.Draw(batch, sprite, Color.White);
+                    else Kanonetexture.Draw(batch, sprite, null, Color.White, 0, new Vector2(sprite.Width, 0), SpriteEffects.FlipHorizontally, 0);
                     break;
 
                 case weapon.seestern:
-                    batch.Draw(Seesterntexture, sprite, Color.White);
+                    if (faces == facing.right) Seesterntexture.Draw(batch, sprite, Color.White);
+                    else Seesterntexture.Draw(batch, sprite, null, Color.White, 0, new Vector2(sprite.Width, 0), SpriteEffects.FlipHorizontally, 0);
                     break;
 
             }
