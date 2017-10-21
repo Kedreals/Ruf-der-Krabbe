@@ -23,6 +23,8 @@ namespace Call_of_Crabs
         public Vector2 offsetRight;
         public Vector2 offsetLeft;
 
+        public float Speed;
+
         public enum facing
         {
                left,
@@ -45,6 +47,20 @@ namespace Call_of_Crabs
         protected float jumpspeed = 300;
         protected int jumpcount = 0;
         protected bool isJumping = false;
+        protected float jumpduration = 0.5f;
+
+        public void Jump(GameTime time)
+        {
+            currjumpduration += (float)time.ElapsedGameTime.TotalSeconds;
+            float dy = 2*jumpduration*jumpduration/jumpheight*(currjumpduration-jumpduration);
+
+            Position += new Vector2(0, dy)*(float)time.ElapsedGameTime.TotalSeconds;
+
+            currjumpheight -= dy*(float)time.ElapsedGameTime.TotalSeconds;
+
+            if (currjumpheight > jumpheight - 0.1f)
+                isJumping = false;
+        }
 
         public Vector2 Position
         {
@@ -92,6 +108,17 @@ namespace Call_of_Crabs
 
     
         public abstract void Draw(SpriteBatch batch);
+
+        /// <summary>
+        /// moves this character in the direction of the target.
+        /// Returns bool if the target is reached in the next tick
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public virtual bool Move(Vector2 target, GameTime time)
+        {
+            return false;
+        }
 
         public void getHit(int damage)
         {

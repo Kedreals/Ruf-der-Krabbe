@@ -49,9 +49,9 @@ namespace Call_of_Crabs.GameStates
             map.Load(contentManager, "TestMap2");
             Player player = new Player();
             player.Load(contentManager, "");
-            KritzlerEnemy kritzler = new KritzlerEnemy();
-            player.Position = new Vector2(1, 18) * Tile.DefaultSize;
-            kritzler.Position = new Vector2(4, 15) * Tile.DefaultSize;
+            //KritzlerEnemy kritzler = new KritzlerEnemy();
+            player.Position = new Vector2(700, 550);//new Vector2(1, 18) * Tile.DefaultSize;
+            //kritzler.Position = new Vector2(4, 15) * Tile.DefaultSize;
             character = player;
             BulletsEverywhere.Load(contentManager);
             enemyHandler = new EnemyHandler(contentManager, Level.FirstLevel);
