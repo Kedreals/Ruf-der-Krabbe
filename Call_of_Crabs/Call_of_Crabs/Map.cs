@@ -24,9 +24,14 @@ namespace Call_of_Crabs
             XDim = bitmap.Width;
             YDim = bitmap.Height;
 
+            Random r = new Random(786545);
+
             Texture2D texSurface = contentManager.Load<Texture2D>("Textures/SurfaceTileTexture");
             Texture2D texInner = contentManager.Load<Texture2D>("Textures/InnerTileTexture");
             Texture2D texShell = contentManager.Load<Texture2D>("Textures/ShellTileTexture");
+            Texture2D texStone = contentManager.Load<Texture2D>("Textures/StoneTexture");
+            Texture2D texGrass = contentManager.Load<Texture2D>("Textures/SeagrassTexture");
+            Texture2D texCoral = contentManager.Load<Texture2D>("Textures/CoralTexture");
 
             Tiles = new Tile[bitmap.Height * bitmap.Width];
 
@@ -53,6 +58,22 @@ namespace Call_of_Crabs
                                 break;
                             case TileType.SurfaceTile:
                                 Tiles[i * bitmap.Width + j].SetTexture(texSurface);
+                                if (r.Next(10) <= 2)
+                                {
+                                    Tiles[(i - 1) * bitmap.Width + j] = new Tile(TileType.DecorationTile, new Vector2(j * Tile.DefaultSize.X, (i - 1) * Tile.DefaultSize.Y));
+                                    switch (r.Next(3))
+                                    {
+                                        case 0:
+                                            Tiles[(i - 1) * bitmap.Width + j].SetTexture(texCoral);
+                                            break;
+                                        case 1:
+                                            Tiles[(i - 1) * bitmap.Width + j].SetTexture(texGrass);
+                                            break;
+                                        case 2:
+                                            Tiles[(i - 1) * bitmap.Width + j].SetTexture(texStone);
+                                            break;
+                                    }
+                                }
                                 break;
                         }
                     }

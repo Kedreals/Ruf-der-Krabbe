@@ -13,7 +13,8 @@ namespace Call_of_Crabs
     {
         InnerTile,
         SurfaceTile,
-        ShellTile
+        ShellTile,
+        DecorationTile
     }
 
     public class Tile

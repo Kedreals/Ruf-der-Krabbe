@@ -140,11 +140,8 @@ namespace Call_of_Crabs
 
                 Position += newPos;
                 currjumpheight += -newPos.Y;
-
-                if (currjumpheight > jumpheight - 0.1)
-                {
-                    isJumping = false;
-                }
+                
+                if(currjumpheight > jumpheight -3)
 
                 Console.WriteLine(currjumpduration);
                 Console.WriteLine(currjumpheight);

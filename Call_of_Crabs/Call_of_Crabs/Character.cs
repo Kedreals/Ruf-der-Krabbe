@@ -103,7 +103,7 @@ namespace Call_of_Crabs
         {
             foreach (Tile tile in map.Tiles)
             {
-                if (tile != null)
+                if (tile != null && tile.Type != TileType.DecorationTile)
                 {
                     Rectangle t;
 
