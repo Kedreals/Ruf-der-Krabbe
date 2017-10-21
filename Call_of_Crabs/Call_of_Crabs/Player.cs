@@ -9,57 +9,26 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Call_of_Crabs
 {
-    public class Player
+    public class Player : Character
     {
-        private Rectangle basecollision;
-        private Rectangle basesprite;
-        public Rectangle collision;
-        public Rectangle sprite;
+       
         public Texture2D texture;
-        public Vector2 offset;
+        
 
-        private Vector2 position;
 
-        public float scale = 1;
-
-        public Vector2 Position
+        public Player(Rectangle collisionBox,Rectangle spritearea): base(collisionBox, spritearea)
         {
-            get { return position; }
-            set
-            {
-                position = value;
-                collision.Location = position.ToPoint();
-                sprite.Location = collision.Location + offset.ToPoint();
-            }
-        }
-
-        public void Scale(float x,float y)
-        {
-            collision.Width = (int)(basecollision.Width * x);
-            collision.Height = (int)(basecollision.Height * y);
-
-            sprite.Width = (int)(basesprite.Width * x);
-            sprite.Height = (int)(basesprite.Height * y);
-        }
-
-        public Player(Rectangle collisionBox,Rectangle spritearea)
-        {
-            basecollision = collisionBox;
-            basesprite = spritearea;
-            offset = (sprite.Location - collision.Location).ToVector2();
-            collision = basecollision;
-            sprite = basesprite;
-            Position = new Vector2(0, 0);
+                
         }
 
 
 
-        public void Load(ContentManager contentManager, string filename)
+        public override void Load(ContentManager contentManager, string filename)
         {
             texture = contentManager.Load<Texture2D>("Textures/" + filename);
         }
         
-        public void Update(GameTime time)
+        public override void Update(GameTime time)
         {
             if (Controls.GetKey(Controls.EKey.Up).IsPressed())
                 Position += new Vector2(0, -1);
@@ -79,37 +48,12 @@ namespace Call_of_Crabs
             Position += new Vector2(0, 0.5f);
         }
 
-        public void Draw(SpriteBatch batch)
+        public override void Draw(SpriteBatch batch)
         {
             batch.Draw(texture, sprite, Color.White);
         }
 
 
-        public void Collide(Map map)
-        {
-            foreach (Tile tile in map.Tiles)
-            {
-                if (tile != null)
-                {
-                    Rectangle t;
-
-                    Rectangle.Intersect(ref collision, ref tile.TileRectangle, out t);
-
-                    if (t.Width < t.Height)
-                    {
-                        Position -= new Vector2(t.Width, 0);
-                    }
-                    else
-                    {
-                        Position -= new Vector2(0, t.Height);
-                    }
-
-                    
-                }
-            }
-
-
-            
-        }
+        
     }
 }
