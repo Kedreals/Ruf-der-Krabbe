@@ -108,26 +108,32 @@ namespace Call_of_Crabs
 
                     if (t.Width < t.Height)
                     {
-                        
-                        if (collision.X < tile.TileRectangle.X)
+                        int sign = Math.Sign(Position.X - tile.Position.X);
+                        if (tile.Type == TileType.SurfaceTile)
                         {
-                            Position -= new Vector2(t.Width, 0);
+                            if (t.Width < 5)
+                            {
+                                Position = Position + sign * new Vector2(t.Width, 0);
+                            }
                         }
                         else
-                        {
-                            Position += new Vector2(t.Width, 0);
+                        { 
+                            Position = Position + sign * new Vector2(t.Width, 0);
                         }
                     }
                     else
                     {
-                        
-                        if (collision.Y < tile.TileRectangle.Y)
+                        int sign = Math.Sign(Position.Y - tile.Position.Y);
+                        if (tile.Type == TileType.SurfaceTile)
                         {
-                            Position -= new Vector2(0, t.Height);
+                            if (t.Height < 5 && sign < 0)
+                            {
+                                Position = Position + sign * new Vector2(0, t.Height);
+                            }
                         }
                         else
                         {
-                            Position += new Vector2(0, t.Height);
+                            Position = Position + sign * new Vector2(0, t.Height);
                         }
                     }
 

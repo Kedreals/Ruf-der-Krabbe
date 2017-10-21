@@ -18,7 +18,9 @@ namespace Call_of_Crabs.GameStates
 
         List<Character> character = new List<Character>();
 
-        Camera2D camera;
+        private Camera2D camera;
+
+        private Background background;
 
         public void Initialize(GraphicsDevice graphics)
         {
@@ -44,6 +46,7 @@ namespace Call_of_Crabs.GameStates
 
         public void LoadContent(ContentManager contentManager)
         {
+            background = new Background(contentManager, new string[] { "WaterBackgroundTexture", "FishBackgroundTexture" });
             map.Load(contentManager, "TestMap");
             character.Add(new Player());
             character.Add(new KritzlerEnemy());
@@ -79,6 +82,8 @@ namespace Call_of_Crabs.GameStates
         public void Draw(SpriteBatch batch)
         {
             batch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, camera.GetTransform());
+
+            background.Draw(batch,camera);
 
             map.Draw(batch);
             BulletsEverywhere.Draw(batch);
