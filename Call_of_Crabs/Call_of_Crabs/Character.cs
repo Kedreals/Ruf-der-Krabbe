@@ -23,6 +23,8 @@ namespace Call_of_Crabs
         public Vector2 offsetRight;
         public Vector2 offsetLeft;
 
+        public float Speed;
+
         public enum facing
         {
                left,
@@ -88,6 +90,17 @@ namespace Call_of_Crabs
 
     
         public abstract void Draw(SpriteBatch batch);
+
+        /// <summary>
+        /// moves this character in the direction of the target.
+        /// Returns bool if the target is reached in the next tick
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public virtual bool Move(Vector2 target, GameTime time)
+        {
+            return false;
+        }
 
         public void getHit(int damage)
         {

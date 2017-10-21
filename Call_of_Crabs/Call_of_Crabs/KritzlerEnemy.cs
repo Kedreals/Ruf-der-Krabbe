@@ -19,7 +19,7 @@ namespace Call_of_Crabs
 
         public KritzlerEnemy(): base(new Rectangle(15, 15, 70, 70), new Rectangle(0, 0, 100, 100),5)
         {
-
+            Speed = 100.0f;
         }
 
 
