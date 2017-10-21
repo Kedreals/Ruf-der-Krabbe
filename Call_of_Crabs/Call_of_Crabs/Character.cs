@@ -101,11 +101,27 @@ namespace Call_of_Crabs
 
                     if (t.Width < t.Height)
                     {
-                        Position += new Vector2(t.Width, 0);
+                        
+                        if (collision.X < tile.TileRectangle.X)
+                        {
+                            Position -= new Vector2(t.Width, 0);
+                        }
+                        else
+                        {
+                            Position += new Vector2(t.Width, 0);
+                        }
                     }
                     else
                     {
-                        Position -= new Vector2(0, t.Height);
+                        
+                        if (collision.Y < tile.TileRectangle.Y)
+                        {
+                            Position -= new Vector2(0, t.Height);
+                        }
+                        else
+                        {
+                            Position += new Vector2(0, t.Height);
+                        }
                     }
 
 
