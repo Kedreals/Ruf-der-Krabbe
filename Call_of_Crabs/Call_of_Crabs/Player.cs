@@ -36,6 +36,7 @@ namespace Call_of_Crabs
         public override void Load(ContentManager contentManager,string filename)
         {
             Revolvertexture = contentManager.Load<Texture2D>("Textures/" + "RevolverKrabbeTexture1");
+            
             Kanonetexture = contentManager.Load<Texture2D>("Textures/" + "KanonenKrabbeTexture1");
             Seesterntexture = contentManager.Load<Texture2D>("Textures/" + "SeesternKrabbeTexture1");
         }
@@ -72,7 +73,8 @@ namespace Call_of_Crabs
             switch (currentweapon)
             {
                 case weapon.revolver:
-                    batch.Draw(Revolvertexture, sprite, Color.White);
+                    if (faces == facing.right) batch.Draw(Revolvertexture, sprite, Color.White);
+                    else batch.Draw(Revolvertexture, sprite, null, Color.White, 0, new Vector2(sprite.Width,0), SpriteEffects.FlipHorizontally, 0);
                     break;
 
                 case weapon.kanone:
