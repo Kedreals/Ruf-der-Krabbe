@@ -43,12 +43,14 @@ namespace Call_of_Crabs.GameStates
             mapRectangle = new Rectangle(loc, size);
             kritzler.Position += new Vector2(70, 150);
 
+            player.Position = new Vector2(1*Tile.DefaultSize.X, 18*Tile.DefaultSize.Y);
+
         }
 
         public void LoadContent(ContentManager contentManager)
         {
             background = new Background(contentManager, new string[] { "WaterBackgroundTexture", "FishBackgroundTexture" });
-            map.Load(contentManager, "TestMap");
+            map.Load(contentManager, "TestMap2");
             player.Load(contentManager,"");
             kritzler.Load(contentManager, "");
         }

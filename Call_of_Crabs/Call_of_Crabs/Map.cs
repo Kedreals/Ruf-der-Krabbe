@@ -34,32 +34,32 @@ namespace Call_of_Crabs
             {
                 for (int j = 0; j < bitmap.Width; j++)
                 {
-                    Color c = color[i*bitmap.Height + j];
+                    Color c = color[i*bitmap.Width + j];
 
                     if (c.ToVector3().Length() == 0)
                     {
                         TileType t = TileType.SurfaceTile;
 
-                        if (i != 0 && color[(i - 1)*bitmap.Height + j] != Color.White)
+                        if (i == 0 || color[(i - 1)*bitmap.Width + j] != Color.White)
                         {
                             t = TileType.InnerTile;
                         }
 
-                        Tiles[i * bitmap.Height + j] = new Tile(t, new Vector2(j * Tile.DefaultSize.X, i*Tile.DefaultSize.Y));
+                        Tiles[i * bitmap.Width + j] = new Tile(t, new Vector2(j * Tile.DefaultSize.X, i*Tile.DefaultSize.Y));
                         switch (t)
                         {
                             case TileType.InnerTile:
-                                Tiles[i * bitmap.Height + j].SetTexture(texInner);
+                                Tiles[i * bitmap.Width + j].SetTexture(texInner);
                                 break;
                             case TileType.SurfaceTile:
-                                Tiles[i * bitmap.Height + j].SetTexture(texSurface);
+                                Tiles[i * bitmap.Width + j].SetTexture(texSurface);
                                 break;
                         }
                     }
                     else if (c == Color.Red)
                     {
-                        Tiles[i * bitmap.Height + j] = new Tile(TileType.ShellTile, new Vector2(j * Tile.DefaultSize.X, i * Tile.DefaultSize.Y), isHostile: true, damage: 10);
-                        Tiles[i * bitmap.Height + j].SetTexture(texShell);
+                        Tiles[i * bitmap.Width + j] = new Tile(TileType.ShellTile, new Vector2(j * Tile.DefaultSize.X, i * Tile.DefaultSize.Y), isHostile: true, damage: 10);
+                        Tiles[i * bitmap.Width + j].SetTexture(texShell);
                     }
                 }
             }
