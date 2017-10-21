@@ -9,57 +9,38 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Call_of_Crabs
 {
-    public class Player
+    public class Player : Character
     {
-        private Rectangle basecollision;
-        private Rectangle basesprite;
-        public Rectangle collision;
-        public Rectangle sprite;
-        public Texture2D texture;
-        public Vector2 offset;
+       
+        public Texture2D Revolvertexture;
+        public Texture2D Kanonetexture;
+        public Texture2D Seesterntexture;
 
-        private Vector2 position;
 
-        public float scale = 1;
-
-        public Vector2 Position
+        enum weapon
         {
-            get { return position; }
-            set
-            {
-                position = value;
-                collision.Location = position.ToPoint();
-                sprite.Location = collision.Location + offset.ToPoint();
-            }
+              revolver,
+              kanone,
+              seestern
         }
 
-        public void Scale(float x,float y)
-        {
-            collision.Width = (int)(basecollision.Width * x);
-            collision.Height = (int)(basecollision.Height * y);
+        private weapon currentweapon=weapon.revolver;
 
-            sprite.Width = (int)(basesprite.Width * x);
-            sprite.Height = (int)(basesprite.Height * y);
-        }
-
-        public Player(Rectangle collisionBox,Rectangle spritearea)
+        public Player(Rectangle collisionBox,Rectangle spritearea): base(collisionBox, spritearea)
         {
-            basecollision = collisionBox;
-            basesprite = spritearea;
-            offset = (sprite.Location - collision.Location).ToVector2();
-            collision = basecollision;
-            sprite = basesprite;
-            Position = new Vector2(0, 0);
+                
         }
 
 
 
-        public void Load(ContentManager contentManager, string filename)
+        public override void Load(ContentManager contentManager,string filename)
         {
-            texture = contentManager.Load<Texture2D>("Textures/" + filename);
+            Revolvertexture = contentManager.Load<Texture2D>("Textures/" + "RevolverKrabbeTexture1");
+            Kanonetexture = contentManager.Load<Texture2D>("Textures/" + "KanonenKrabbeTexture1");
+            Seesterntexture = contentManager.Load<Texture2D>("Textures/" + "SeesternKrabbeTexture1");
         }
         
-        public void Update(GameTime time)
+        public override void Update(GameTime time)
         {
             if (Controls.GetKey(Controls.EKey.Up).IsPressed())
                 Position += new Vector2(0, -1);
@@ -70,46 +51,43 @@ namespace Call_of_Crabs
             if (Controls.GetKey(Controls.EKey.Right).IsPressed())
                 Position += new Vector2(1f, 0);
 
+            if (Controls.GetKey(Controls.EKey.firstweapon).IsPressed())
+                currentweapon = weapon.revolver;
+            if (Controls.GetKey(Controls.EKey.secondweapon).IsPressed())
+                currentweapon = weapon.kanone;
+            if (Controls.GetKey(Controls.EKey.thirdweapon).IsPressed())
+                currentweapon = weapon.seestern;
+
+
+
             if (Controls.GetKey(Controls.EKey.Jump).IsPressed())
             { }
 
      
-
-            //schwerkraft
-            Position += new Vector2(0, 0.5f);
-        }
-
-        public void Draw(SpriteBatch batch)
-        {
-            batch.Draw(texture, sprite, Color.White);
-        }
-
-
-        public void Collide(Map map)
-        {
-            foreach (Tile tile in map.Tiles)
-            {
-                if (tile != null)
-                {
-                    Rectangle t;
-
-                    Rectangle.Intersect(ref collision, ref tile.TileRectangle, out t);
-
-                    if (t.Width < t.Height)
-                    {
-                        Position -= new Vector2(t.Width, 0);
-                    }
-                    else
-                    {
-                        Position -= new Vector2(0, t.Height);
-                    }
-
-                    
-                }
-            }
-
-
             
         }
+
+        public override void Draw(SpriteBatch batch)
+        {
+            switch (currentweapon)
+            {
+                case weapon.revolver:
+                    batch.Draw(Revolvertexture, sprite, Color.White);
+                    break;
+
+                case weapon.kanone:
+                    batch.Draw(Kanonetexture, sprite, Color.White);
+                    break;
+
+                case weapon.seestern:
+                    batch.Draw(Seesterntexture, sprite, Color.White);
+                    break;
+
+            }
+            
+        }
+
+
+        
     }
 }

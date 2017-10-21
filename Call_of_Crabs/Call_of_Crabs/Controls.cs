@@ -22,6 +22,10 @@ namespace Call_of_Crabs
             Jump,
             Confirm,
 
+            firstweapon,
+            secondweapon,
+            thirdweapon,
+
             Count
         }
 
@@ -33,6 +37,9 @@ namespace Call_of_Crabs
                 new ControlKey(Keys.A),
                 new ControlKey(Keys.Space),
                 new ControlKey(Keys.Enter),
+                new ControlKey(Keys.D1),
+                new ControlKey(Keys.D2),
+                new ControlKey(Keys.D3),
             };
 
         public static ControlKey GetKey(EKey key)

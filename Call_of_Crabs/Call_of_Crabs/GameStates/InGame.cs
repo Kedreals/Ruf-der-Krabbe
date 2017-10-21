@@ -13,7 +13,7 @@ namespace Call_of_Crabs.GameStates
     class InGame : IGameState
     {
         private Map map = new Map();
-        private Player player = new Player(new Rectangle(25, 25, 50, 50), new Rectangle(0, 0, 200, 100));
+        private Player player = new Player(new Rectangle(25, 25, 100, 50), new Rectangle(0, 0, 200, 100));
         Camera2D camera;
         Texture2D test;
 
@@ -27,27 +27,16 @@ namespace Call_of_Crabs.GameStates
         {
             test = contentManager.Load<Texture2D>("Textures/Kitzler");
             map.Load(contentManager, "TestMap");
-            player.Load(contentManager, "RevolverKrabbeTexture1");
+            player.Load(contentManager,"");
         }
 
         public EGameState Update(GameTime time)
         {
-            /*
-            if (Controls.GetKey(Controls.EKey.Up).IsPressed())
-                camera.Position += new Vector2(0, 1);
-            if (Controls.GetKey(Controls.EKey.Down).IsPressed())
-                camera.Position += new Vector2(0, -1f);
-            if (Controls.GetKey(Controls.EKey.Left).IsPressed())
-                camera.Position += new Vector2(1f,0);
-            if (Controls.GetKey(Controls.EKey.Right).IsPressed())
-                camera.Position += new Vector2(-1f,0);
-
-            if (Controls.GetKey(Controls.EKey.Jump).IsPressed())
-                camera.Scale *= 0.99f;
-            */
             player.Update(time);
 
             player.Collide(map);
+
+            camera.Position = player.sprite.Center.ToVector2();
 
             return EGameState.InGame;
         }
