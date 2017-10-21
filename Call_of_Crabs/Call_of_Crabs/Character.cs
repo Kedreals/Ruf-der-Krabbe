@@ -101,7 +101,7 @@ namespace Call_of_Crabs
 
                     if (t.Width < t.Height)
                     {
-                        Position -= new Vector2(t.Width, 0);
+                        Position += new Vector2(t.Width, 0);
                     }
                     else
                     {
