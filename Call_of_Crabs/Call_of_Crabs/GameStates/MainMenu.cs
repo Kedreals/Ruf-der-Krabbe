@@ -66,14 +66,12 @@ namespace Call_of_Crabs.GameStates
 
             ButtonBackground = new Texture2D(graphics, (int)1, (int)1);
             ButtonBackground.SetData(new Color[] { Color.White });
-
-            Background = new Texture2D(graphics, 1, 1);
-            Background.SetData(new Color[] { Color.BlueViolet });
         }
 
         public void LoadContent(ContentManager contentManager)
         {
             font = contentManager.Load<SpriteFont>("SpriteFonts/Arial");
+            Background = contentManager.Load<Texture2D>("Textures/BackgroundTexture");
         }
 
         float t = 0;
