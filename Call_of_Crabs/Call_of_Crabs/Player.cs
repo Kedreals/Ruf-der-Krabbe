@@ -28,6 +28,8 @@ namespace Call_of_Crabs
             set
             {
                 position = value;
+                collision.Location = position.ToPoint();
+                sprite.Location = collision.Location + offset.ToPoint();
             }
         }
 
@@ -71,8 +73,7 @@ namespace Call_of_Crabs
             if (Controls.GetKey(Controls.EKey.Jump).IsPressed())
             { }
 
-            collision.Location = position.ToPoint();
-            sprite.Location = collision.Location + offset.ToPoint();
+     
 
             //schwerkraft
             Position += new Vector2(0, 0.5f);
@@ -103,8 +104,7 @@ namespace Call_of_Crabs
                         Position -= new Vector2(0, t.Height);
                     }
 
-                    collision.Location = position.ToPoint();
-                    sprite.Location = collision.Location + offset.ToPoint();
+                    
                 }
             }
 
