@@ -65,6 +65,7 @@ namespace Call_of_Crabs
                                     {
                                         case 0:
                                             Tiles[(i - 1) * bitmap.Width + j].SetTexture(texCoral);
+                                            Tiles[(i - 1) * bitmap.Width + j].Scale(new Vector2());
                                             break;
                                         case 1:
                                             Tiles[(i - 1) * bitmap.Width + j].SetTexture(texGrass);

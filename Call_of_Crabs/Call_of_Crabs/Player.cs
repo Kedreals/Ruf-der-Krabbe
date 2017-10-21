@@ -80,7 +80,11 @@ namespace Call_of_Crabs
                 jumpcount += 1;
             }
             if (Controls.GetKey(Controls.EKey.Down).IsPressed())
+            {
                 Position += new Vector2(0, 150f) * (float)time.ElapsedGameTime.TotalSeconds;
+                isJumping = false;
+            }
+               
             if (Controls.GetKey(Controls.EKey.Left).IsPressed())
             {
                 SetAnimations(1);
@@ -134,17 +138,7 @@ namespace Call_of_Crabs
 
             if (isJumping)
             {
-                currjumpduration += (float) time.ElapsedGameTime.TotalSeconds;
-
-                Vector2 newPos = new Vector2(0, (float)time.ElapsedGameTime.TotalSeconds * (2*currjumpduration*jumpspeed-2*jumpspeed*(float)Math.Sqrt(jumpheight/jumpspeed)));
-
-                Position += newPos;
-                currjumpheight += -newPos.Y;
-                
-                if(currjumpheight > jumpheight -3)
-
-                Console.WriteLine(currjumpduration);
-                Console.WriteLine(currjumpheight);
+                Jump(time);
             }
             else
             {
