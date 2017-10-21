@@ -12,6 +12,8 @@ namespace Call_of_Crabs
     public class Map
     {
         public Tile[] Tiles;
+        public int XDim;
+        public int YDim;
 
         public void Load(ContentManager contentManager, string filename)
         {
@@ -19,8 +21,12 @@ namespace Call_of_Crabs
             Color[] color = new Color[bitmap.Height * bitmap.Width];
             bitmap.GetData(color);
 
+            XDim = bitmap.Width;
+            YDim = bitmap.Height;
+
             Texture2D texSurface = contentManager.Load<Texture2D>("Textures/SurfaceTileTexture");
             Texture2D texInner = contentManager.Load<Texture2D>("Textures/InnerTileTexture");
+            //Texture2D texShell = contentManager.Load<Texture2D>("Texture/ShellTiletexture");
 
             Tiles = new Tile[bitmap.Height * bitmap.Width];
 

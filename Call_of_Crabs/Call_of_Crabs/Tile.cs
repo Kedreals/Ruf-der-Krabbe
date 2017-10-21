@@ -39,7 +39,24 @@ namespace Call_of_Crabs
         public TileType Type;
         public bool IsHostile;
 
-        public Tile(TileType type, Vector2 position, Vector2 size = default(Vector2), bool isHostile = false)
+        public float damage;
+        public float Damage
+        {
+            get
+            {
+                if (IsHostile)
+                {
+                    return damage;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+            private set { damage = value; }
+        }
+
+        public Tile(TileType type, Vector2 position, Vector2 size = default(Vector2), bool isHostile = false, float damage = 0)
         {
             Type = type;
             this.position = position;
@@ -52,6 +69,7 @@ namespace Call_of_Crabs
                 this.size = DefaultSize;
             }
             IsHostile = isHostile;
+            Damage = damage;
 
             TileRectangle = new Rectangle(position.ToPoint(), Size.ToPoint());
         }
@@ -76,6 +94,17 @@ namespace Call_of_Crabs
         {
             Size *= vec;
             TileRectangle.Size = Size.ToPoint();
+        }
+
+        public void MakeHostile(float damage)
+        {
+            IsHostile = true;
+            Damage = damage;
+        }
+
+        public void MakeFriendly()
+        {
+            IsHostile = false;
         }
 
         public void Draw(SpriteBatch batch)
