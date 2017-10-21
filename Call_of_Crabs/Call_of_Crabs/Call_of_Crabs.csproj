@@ -46,6 +46,7 @@
     <Compile Include="BulletsEverywhere.cs" />
     <Compile Include="Background.cs" />
     <Compile Include="Character.cs" />
+    <Compile Include="EnemyHandler.cs" />
     <Compile Include="KritzlerEnemy.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Controls.cs" />
