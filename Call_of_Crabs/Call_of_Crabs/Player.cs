@@ -72,11 +72,12 @@ namespace Call_of_Crabs
             Kanonetexture.Update(time);
             Seesterntexture.Update(time);
 
-            if (Controls.GetKey(Controls.EKey.Up).IsPressed() && jumpcount < 2)
+            if (Controls.GetKey(Controls.EKey.Up).HasJustBeenPressed() && jumpcount < 2)
             {
-
+                isJumping = true;
+                currjumpduration = 0;
+                currjumpheight = 0;
                 jumpcount += 1;
-                Position += new Vector2(0, -150f) * (float)time.ElapsedGameTime.TotalSeconds;
             }
             if (Controls.GetKey(Controls.EKey.Down).IsPressed())
                 Position += new Vector2(0, 150f) * (float)time.ElapsedGameTime.TotalSeconds;
@@ -94,6 +95,7 @@ namespace Call_of_Crabs
             {
                 SetAnimations(0);
             }
+
 
             if (Controls.GetKey(Controls.EKey.firstweapon).IsPressed())
                 currentweapon = weapon.revolver;
@@ -130,8 +132,28 @@ namespace Call_of_Crabs
                 
             }
 
-            //schwerkraft
-            Position += new Vector2(0, 100f) * (float)time.ElapsedGameTime.TotalSeconds;
+            if (isJumping)
+            {
+                currjumpduration += (float) time.ElapsedGameTime.TotalSeconds;
+
+                Vector2 newPos = new Vector2(0, (float)time.ElapsedGameTime.TotalSeconds * (2*currjumpduration*jumpspeed-2*jumpspeed*(float)Math.Sqrt(jumpheight/jumpspeed)));
+
+                Position += newPos;
+                currjumpheight += -newPos.Y;
+
+                if (currjumpheight > jumpheight - 0.1)
+                {
+                    isJumping = false;
+                }
+
+                Console.WriteLine(currjumpduration);
+                Console.WriteLine(currjumpheight);
+            }
+            else
+            {
+                //schwerkraft
+                Position += new Vector2(0, 100f) * (float)time.ElapsedGameTime.TotalSeconds;
+            }
 
         }
 
