@@ -115,11 +115,13 @@ namespace Call_of_Crabs
                     break;
 
                 case weapon.kanone:
-                    Kanonetexture.Draw(batch, sprite, Color.White);
+                    if (faces == facing.right) Kanonetexture.Draw(batch, sprite, Color.White);
+                    else Kanonetexture.Draw(batch, sprite, null, Color.White, 0, new Vector2(sprite.Width, 0), SpriteEffects.FlipHorizontally, 0);
                     break;
 
                 case weapon.seestern:
-                    Seesterntexture.Draw(batch, sprite, Color.White);
+                    if (faces == facing.right) Seesterntexture.Draw(batch, sprite, Color.White);
+                    else Seesterntexture.Draw(batch, sprite, null, Color.White, 0, new Vector2(sprite.Width, 0), SpriteEffects.FlipHorizontally, 0);
                     break;
 
             }
