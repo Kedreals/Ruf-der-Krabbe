@@ -135,12 +135,16 @@ namespace Call_of_Crabs
             if (isJumping)
             {
                 currjumpduration += (float) time.ElapsedGameTime.TotalSeconds;
-                float a = (float) Math.Sin(currjumpduration);
 
-                Vector2 newPos = new Vector2(0, -(-2*currjumpduration+2*(float)Math.Sqrt(70)));
+                Vector2 newPos = new Vector2(0, (float)time.ElapsedGameTime.TotalSeconds * (2*currjumpduration*jumpspeed-2*jumpspeed*(float)Math.Sqrt(jumpheight/jumpspeed)));
 
                 Position += newPos;
                 currjumpheight += -newPos.Y;
+
+                if (currjumpheight > jumpheight - 0.1)
+                {
+                    isJumping = false;
+                }
 
                 Console.WriteLine(currjumpduration);
                 Console.WriteLine(currjumpheight);

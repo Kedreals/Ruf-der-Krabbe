@@ -42,6 +42,7 @@ namespace Call_of_Crabs
         protected float jumpheight = 70f;
         protected float currjumpduration = 0f;
         protected float currjumpheight = 0;
+        protected float jumpspeed = 300;
         protected int jumpcount = 0;
         protected bool isJumping = false;
 
