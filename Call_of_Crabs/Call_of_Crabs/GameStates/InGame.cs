@@ -17,7 +17,7 @@ namespace Call_of_Crabs.GameStates
 
         private Rectangle mapRectangle;
 
-        private KritzlerEnemy kritzler = new KritzlerEnemy(new Rectangle(15, 15, 70, 70), new Rectangle(0, 0, 100, 100));
+        private EnemyHandler enemyHandler;
 
         private Camera2D camera;
 
@@ -41,7 +41,7 @@ namespace Call_of_Crabs.GameStates
             Point loc = new Point(0, 0);//map.Tiles[0].Position.ToPoint();
             Point size = new Point((int)(map.XDim * tileSize.X), (int)(map.YDim * tileSize.Y));
             mapRectangle = new Rectangle(loc, size);
-            kritzler.Position += new Vector2(70, 150);
+            
 
         }
 
@@ -50,17 +50,17 @@ namespace Call_of_Crabs.GameStates
             background = new Background(contentManager, new string[] { "WaterBackgroundTexture", "FishBackgroundTexture" });
             map.Load(contentManager, "TestMap");
             player.Load(contentManager,"");
-            kritzler.Load(contentManager, "");
+            enemyHandler = new EnemyHandler(contentManager, Level.FirstLevel);
         }
 
         public EGameState Update(GameTime time)
         {
             player.Update(time);
-            kritzler.Update(time);
+            enemyHandler.Update(time);
 
 
             player.Collide(map);
-            kritzler.Collide(map);
+            enemyHandler.Collide(map);
 
 
 
@@ -77,7 +77,7 @@ namespace Call_of_Crabs.GameStates
             background.Draw(batch,camera);
 
             map.Draw(batch);
-            kritzler.Draw(batch);
+            enemyHandler.Draw(batch);
             player.Draw(batch);
 
             batch.End();
