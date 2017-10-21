@@ -16,6 +16,7 @@ namespace Call_of_Crabs
         public Animation Kanonetexture;
         public Animation Seesterntexture;
 
+        double shotCooldown = 0;
 
         enum weapon
         {
@@ -26,7 +27,7 @@ namespace Call_of_Crabs
 
         private weapon currentweapon=weapon.revolver;
 
-        public Player(Rectangle collisionBox,Rectangle spritearea): base(collisionBox, spritearea)
+        public Player(): base(new Rectangle(25, 25, 100, 50), new Rectangle(0, 0, 200, 100),3)
         {
                 
         }
@@ -71,18 +72,18 @@ namespace Call_of_Crabs
             Seesterntexture.Update(time);
 
             if (Controls.GetKey(Controls.EKey.Up).IsPressed())
-                Position += new Vector2(0, -1);
+                Position += new Vector2(0, -150f) * (float)time.ElapsedGameTime.TotalSeconds;
             if (Controls.GetKey(Controls.EKey.Down).IsPressed())
-                Position += new Vector2(0, 1f);
+                Position += new Vector2(0, 150f) * (float)time.ElapsedGameTime.TotalSeconds;
             if (Controls.GetKey(Controls.EKey.Left).IsPressed())
             {
                 SetAnimations(1);
-                Position += new Vector2(-1f, 0);
+                Position += new Vector2(-150f,0) * (float)time.ElapsedGameTime.TotalSeconds;
             }
             else if (Controls.GetKey(Controls.EKey.Right).IsPressed())
             {
                 SetAnimations(1);
-                Position += new Vector2(1f, 0);
+                Position += new Vector2(150f,0 ) * (float)time.ElapsedGameTime.TotalSeconds;
             }
             else
             {
@@ -96,13 +97,37 @@ namespace Call_of_Crabs
             if (Controls.GetKey(Controls.EKey.thirdweapon).IsPressed())
                 currentweapon = weapon.seestern;
 
-
+            shotCooldown -= time.ElapsedGameTime.TotalSeconds;
+            if (shotCooldown < 0) shotCooldown = -0.1;
 
             if (Controls.GetKey(Controls.EKey.Jump).IsPressed())
-            { }
+            {
+                if (shotCooldown < 0)
+                {
+                    switch (currentweapon)
+                    {
+                        case weapon.revolver:
+                            BulletsEverywhere.SpawnBullet(new Vector2((faces==facing.right)?(collision.X + collision.Width + 2):collision.X-20, collision.Y + 10), (faces == facing.right), BulletsEverywhere.BulletType.revolver);
+                            shotCooldown += 0.5;
+                            break;
 
-     
-            
+                        case weapon.kanone:
+                            BulletsEverywhere.SpawnBullet(new Vector2((faces == facing.right) ? (collision.X + collision.Width + 2) : collision.X - 20, collision.Y + 15), (faces == facing.right), BulletsEverywhere.BulletType.kanone);
+                            shotCooldown += 1;
+                            break;
+
+                        case weapon.seestern:
+                            BulletsEverywhere.SpawnBullet(new Vector2((faces == facing.right) ? (collision.X + collision.Width + 2) : collision.X - 20, collision.Y + 12), (faces == facing.right), BulletsEverywhere.BulletType.seestern);
+                            shotCooldown += 0.6;
+                            break;
+                    }
+                } 
+                
+            }
+
+            //schwerkraft
+            Position += new Vector2(0, 10f) * (float)time.ElapsedGameTime.TotalSeconds;
+
         }
 
         public override void Draw(SpriteBatch batch)

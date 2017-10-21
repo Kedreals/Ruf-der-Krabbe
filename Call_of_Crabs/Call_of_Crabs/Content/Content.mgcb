@@ -295,7 +295,7 @@
 /processorParam:TextureFormat=Color
 /build:Textures/GegnerKrakenTexture3.png
 
-#begin Textures/Kugel.png
+#begin Textures/Kugel1.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -305,9 +305,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Textures/Kugel.png
+/build:Textures/Kugel1.png
 
-#begin Textures/Muschel.png
+#begin Textures/Muschel1.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -317,9 +317,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Textures/Muschel.png
+/build:Textures/Muschel1.png
 
-#begin Textures/Patrone.png
+#begin Textures/Patrone1.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -329,9 +329,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Textures/Patrone.png
+/build:Textures/Patrone1.png
 
-#begin Textures/SeesternSchuss.png
+#begin Textures/SeesternSchuss1.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -341,7 +341,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Textures/SeesternSchuss.png
+/build:Textures/SeesternSchuss1.png
 
 #begin Textures/BackgroundTexture.png
 /importer:TextureImporter

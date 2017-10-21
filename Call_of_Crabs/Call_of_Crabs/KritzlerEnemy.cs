@@ -16,7 +16,7 @@ namespace Call_of_Crabs
 
 
 
-        public KritzlerEnemy(Rectangle collisionBox, Rectangle spritearea): base(collisionBox, spritearea)
+        public KritzlerEnemy(): base(new Rectangle(15, 15, 70, 70), new Rectangle(0, 0, 100, 100),5)
         {
 
         }
@@ -30,8 +30,9 @@ namespace Call_of_Crabs
 
         public override void Update(GameTime time)
         {
-           
 
+            //schwerkraft
+            Position += new Vector2(0, 1000f) * (float)time.ElapsedGameTime.TotalSeconds;
 
         }
 

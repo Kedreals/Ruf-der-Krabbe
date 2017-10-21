@@ -12,6 +12,9 @@ namespace Call_of_Crabs
 {
     public abstract class Character
     {
+        public int hitpoints;
+
+        public bool dead = false;
 
         private Rectangle basecollision;
         private Rectangle basesprite;
@@ -62,7 +65,7 @@ namespace Call_of_Crabs
             sprite.Height = (int)(basesprite.Height * y);
         }
 
-        public Character(Rectangle collisionBox, Rectangle spritearea)
+        public Character(Rectangle collisionBox, Rectangle spritearea,int hits)
         {
             basecollision = collisionBox;
             basesprite = spritearea;
@@ -71,6 +74,7 @@ namespace Call_of_Crabs
             collision = basecollision;
             sprite = basesprite;
             Position = new Vector2(0, 0);
+            hitpoints = hits;
         }
 
 
@@ -82,13 +86,16 @@ namespace Call_of_Crabs
     
         public abstract void Draw(SpriteBatch batch);
 
-
+        public void getHit(int damage)
+        {
+            hitpoints -= damage;
+            if (hitpoints <= 0) dead = true;
+        }
 
         public void Collide(Map map)
         {
 
-            //schwerkraft
-            Position += new Vector2(0, 0.5f);
+            
 
 
             foreach (Tile tile in map.Tiles)
