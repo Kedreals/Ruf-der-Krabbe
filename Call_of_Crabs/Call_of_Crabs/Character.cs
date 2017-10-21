@@ -17,21 +17,38 @@ namespace Call_of_Crabs
         private Rectangle basesprite;
         public Rectangle collision;
         public Rectangle sprite;
-        public Vector2 offset;
+        public Vector2 offsetRight;
+        public Vector2 offsetLeft;
 
+        public enum facing
+        {
+               left,
+               right
+        }
+
+        public facing faces = facing.right;
 
         private Vector2 position;
 
         public float scale = 1;
+
+        private Vector2 lastpos;
+
+        private float threshold = 0;
 
         public Vector2 Position
         {
             get { return position; }
             set
             {
+                lastpos = position;
                 position = value;
                 collision.Location = position.ToPoint();
-                sprite.Location = collision.Location + offset.ToPoint();
+                threshold += (lastpos.X - position.X);
+                if (threshold >= 2) { faces = facing.left; threshold -= 2; }
+                else if (threshold <= -2) { faces = facing.right; threshold += 2; }
+                if(faces==facing.right)sprite.Location = collision.Location + offsetRight.ToPoint();
+                else sprite.Location = collision.Location + offsetLeft.ToPoint();
             }
         }
 
@@ -49,7 +66,8 @@ namespace Call_of_Crabs
         {
             basecollision = collisionBox;
             basesprite = spritearea;
-            offset = (basesprite.Location - basecollision.Location).ToVector2();
+            offsetRight = (basesprite.Location - basecollision.Location).ToVector2();
+            offsetLeft = new Vector2(basesprite.Width - (basecollision.X + basecollision.Width), offsetRight.Y);
             collision = basecollision;
             sprite = basesprite;
             Position = new Vector2(0, 0);

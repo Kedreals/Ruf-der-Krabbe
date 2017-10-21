@@ -40,7 +40,7 @@ namespace Call_of_Crabs.GameStates
             player.Collide(map);
             kritzler.Collide(map);
 
-            camera.Position = player.sprite.Center.ToVector2();
+            camera.Position = player.collision.Center.ToVector2() ;
 
             return EGameState.InGame;
         }
