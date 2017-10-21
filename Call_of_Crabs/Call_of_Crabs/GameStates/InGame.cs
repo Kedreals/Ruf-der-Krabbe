@@ -41,17 +41,18 @@ namespace Call_of_Crabs.GameStates
             Point loc = new Point(0, 0);//map.Tiles[0].Position.ToPoint();
             Point size = new Point((int)(map.XDim * tileSize.X), (int)(map.YDim * tileSize.Y));
             mapRectangle = new Rectangle(loc, size);
-
-            player.Position = new Vector2(1*Tile.DefaultSize.X, 18*Tile.DefaultSize.Y);
-
         }
 
         public void LoadContent(ContentManager contentManager)
         {
             background = new Background(contentManager, new string[] { "WaterBackgroundTexture", "FishBackgroundTexture" });
             map.Load(contentManager, "TestMap2");
-            character.Add(new Player());
-            character.Add(new KritzlerEnemy());
+            Player player = new Player();
+            KritzlerEnemy kritzler = new KritzlerEnemy();
+            player.Position = new Vector2(1, 18) * Tile.DefaultSize;
+            kritzler.Position = new Vector2(4, 15) * Tile.DefaultSize;
+            character.Add(player);
+            character.Add(kritzler);
             foreach (Character c in character)
             {
                 c.Load(contentManager, "");
@@ -72,8 +73,6 @@ namespace Call_of_Crabs.GameStates
             {
                 c.Collide(map);
             }
-
-
 
             camera.Position = character.ElementAt(0).collision.Center.ToVector2();
             camera.SetVisibilityContainedIn(mapRectangle);

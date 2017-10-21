@@ -32,7 +32,7 @@ namespace Call_of_Crabs
         {
 
             //schwerkraft
-            Position += new Vector2(0, 1000f) * (float)time.ElapsedGameTime.TotalSeconds;
+            Position += new Vector2(0, 100f) * (float)time.ElapsedGameTime.TotalSeconds;
 
         }
 

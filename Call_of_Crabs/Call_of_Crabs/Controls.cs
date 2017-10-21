@@ -19,7 +19,7 @@ namespace Call_of_Crabs
             Right,
             Left,
 
-            Jump,
+            Shoot,
             Confirm,
 
             firstweapon,

@@ -39,6 +39,9 @@ namespace Call_of_Crabs
 
         private float threshold = 0;
 
+        protected float jumpheight = 70f;
+        protected float jumpcount = 0;
+
         public Vector2 Position
         {
             get { return position; }
@@ -94,10 +97,6 @@ namespace Call_of_Crabs
 
         public void Collide(Map map)
         {
-
-            
-
-
             foreach (Tile tile in map.Tiles)
             {
                 if (tile != null)
@@ -126,9 +125,10 @@ namespace Call_of_Crabs
                         int sign = Math.Sign(Position.Y - tile.Position.Y);
                         if (tile.Type == TileType.SurfaceTile)
                         {
-                            if (t.Height < 5 && sign < 0)
+                            if (t.Height < 10 && sign < 0)
                             {
                                 Position = Position + sign * new Vector2(0, t.Height);
+                                jumpcount = 0;
                             }
                         }
                         else
