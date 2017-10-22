@@ -39,7 +39,7 @@ namespace Call_of_Crabs
             shotCooldown -= time.ElapsedGameTime.TotalSeconds;
             if (shotCooldown < 0)
             {
-                BulletsEverywhere.SpawnBullet(new Vector2((faces == facing.right) ? (collision.X + collision.Width + 10) : collision.X - 50, collision.Y + 10), (faces == facing.right), BulletsEverywhere.BulletType.kanone);
+                BulletsEverywhere.SpawnBullet(new Vector2((faces == facing.right) ? (collision.X + collision.Width + 20) : collision.X - 50, collision.Y + 35), (faces == facing.right), BulletsEverywhere.BulletType.kanone);
                 shotCooldown = 1.5;
             }
         }

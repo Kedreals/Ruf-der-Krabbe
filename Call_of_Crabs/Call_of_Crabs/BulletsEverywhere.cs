@@ -226,9 +226,9 @@ namespace Call_of_Crabs
 
             public Vector2 velocity = new Vector2(900f, 0f);
 
+            double timeout = 5;
 
-
-            public CthulluBullet(bool right) : base(new Rectangle(27, 12, 60, 60), new Rectangle(0, 0, 90, 90), 10)
+            public CthulluBullet(bool right) : base(new Rectangle(27, 12, 60, 60), new Rectangle(0, 0, 90, 90), 9)
             {
                 if (!right)
                 {
@@ -236,11 +236,18 @@ namespace Call_of_Crabs
                     faces = facing.left;
                 }
             }
-
+            
             public override void Draw(SpriteBatch batch)
             {
-                if (faces == facing.right) texture.Draw(batch, sprite, Color.White);
-                else texture.Draw(batch, sprite, null, Color.White, 0, new Vector2(0, 0), SpriteEffects.FlipHorizontally, 0);
+                int x = (int)((sprite.X) * (1-timeout / 5.0d) + (sprite.X + sprite.Width / 2) * ( timeout / 5.0d));
+                int y = (int)((sprite.Y) * (1-timeout / 5.0d) + (sprite.Y + sprite.Height / 2) * ( timeout / 5.0d));
+                int w = (int)(sprite.Width * (1-timeout / 5.0d));
+                int h = (int)(sprite.Height * (1-timeout / 5.0d));
+
+                Rectangle bla = new Rectangle(x, y, w, h);
+
+                if (faces == facing.right) texture.Draw(batch, bla, Color.White);
+                else texture.Draw(batch, bla, null, Color.White, 0, new Vector2(0, 0), SpriteEffects.FlipHorizontally, 0);
             }
 
             public override void Load(ContentManager contentManager, string filename)
@@ -250,7 +257,12 @@ namespace Call_of_Crabs
 
             public override void Update(GameTime time)
             {
-                Position += velocity * (float)time.ElapsedGameTime.TotalSeconds;
+                if (timeout >= 0)
+                {
+                    timeout -= time.ElapsedGameTime.TotalSeconds;
+                    Position += new Vector2(0, 0);
+                }
+                else Position += velocity * (float)time.ElapsedGameTime.TotalSeconds;
             }
         }
 
