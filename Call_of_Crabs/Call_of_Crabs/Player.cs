@@ -120,7 +120,7 @@ namespace Call_of_Crabs
                     switch (currentweapon)
                     {
                         case weapon.revolver:
-                            BulletsEverywhere.SpawnBullet(new Vector2((faces == facing.right) ? (collision.X + collision.Width + 30) : collision.X -30, collision.Y), (faces == facing.right), BulletsEverywhere.BulletType.cthullu);
+                            //BulletsEverywhere.SpawnBullet(new Vector2((faces == facing.right) ? (collision.X + collision.Width + 30) : collision.X -30, collision.Y), (faces == facing.right), BulletsEverywhere.BulletType.cthullu);
                             BulletsEverywhere.SpawnBullet(new Vector2((faces==facing.right)?(collision.X + collision.Width + 30):collision.X-40, collision.Y + 11), (faces == facing.right), BulletsEverywhere.BulletType.revolver);
                             shotCooldown += 0.5;
                             break;

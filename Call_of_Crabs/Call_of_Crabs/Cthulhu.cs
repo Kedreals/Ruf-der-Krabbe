@@ -18,7 +18,7 @@ namespace Call_of_Crabs
 
         public override float ReaktionRadius { get; protected set; } = 20 * Tile.DefaultSize.X;
 
-        public Cthulhu() : base(new Rectangle(0,0,400,400), new Rectangle(0,0,400,400), 2)
+        public Cthulhu() : base(new Rectangle(0,0,400,400), new Rectangle(0,0,400,400), 50)
         {
 
         }
