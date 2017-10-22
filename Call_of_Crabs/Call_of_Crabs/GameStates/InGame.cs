@@ -50,12 +50,12 @@ namespace Call_of_Crabs.GameStates
 
         public void LoadContent(ContentManager contentManager)
         {
-            background = new Background(contentManager, new string[] { "WaterBackgroundTexture", "FishBackgroundTexture" });
+            background = new Background(contentManager, new string[] { "WaterBackgroundTexture", "FishBackgroundTexture", "PanzerBackgroundTexture" }, new Vector2[] {Vector2.Zero, Vector2.Zero, new Vector2(800, 800)});
             map.Load(contentManager, "TestMap2");
             Player player = new Player();
             player.Load(contentManager, "");
             //KritzlerEnemy kritzler = new KritzlerEnemy();
-            player.Position = new Vector2(700, 550);//new Vector2(1, 18) * Tile.DefaultSize;
+            player.Position = new Vector2(1, 18) * Tile.DefaultSize; //new Vector2(700, 550);
             //kritzler.Position = new Vector2(4, 15) * Tile.DefaultSize;
             character = player;
             BulletsEverywhere.Load(contentManager);
