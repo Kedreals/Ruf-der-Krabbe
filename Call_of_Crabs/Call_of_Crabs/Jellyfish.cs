@@ -38,7 +38,7 @@ namespace Call_of_Crabs
             shotCooldown -= time.ElapsedGameTime.TotalSeconds;
             if (shotCooldown < 0 && shotCount < burst)
             {
-
+                Sound.sounds["Blob"].Play();
                 BulletsEverywhere.SpawnBullet(sprite.Center.ToVector2()+new Vector2(0,verticalSpeed), true, BulletsEverywhere.BulletType.seifenblase);
                 shotCooldown = 0.05;
                 if (++shotCount >= burst)

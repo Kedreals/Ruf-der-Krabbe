@@ -11,7 +11,7 @@ namespace Call_of_Crabs
     public static class Sound
     {
         public static string[] soundnames = {"Blob", "Bösesschlitzschlitz", "PewPew", "PewPew2", "Schlitzschlitz", "SchnitzSchnitz"}; 
-        public static Dictionary<string, SoundEffect> sounds;
+        public static Dictionary<string, SoundEffect> sounds = new Dictionary<string, SoundEffect>();
 
         public static void Load(ContentManager contentManager)
         {

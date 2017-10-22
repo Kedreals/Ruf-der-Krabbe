@@ -69,9 +69,11 @@ namespace Call_of_Crabs
 
         private void Shoot(Vector2 target, GameTime time)
         {
+            
             shotCooldown -= time.ElapsedGameTime.TotalSeconds;
             if (shotCooldown < 0)
             {
+                Sound.sounds["Schlitzschlitz"].Play();
                 BulletsEverywhere.SpawnBullet(new Vector2((faces == facing.right) ? (collision.X + collision.Width + 10) : collision.X - 50, collision.Y +10), (faces == facing.right), BulletsEverywhere.BulletType.knife);
                 shotCooldown += 0.5;
             }
