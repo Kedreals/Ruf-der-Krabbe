@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Globalization;
+using System.Threading;
 
 namespace Call_of_Crabs
 {
@@ -14,6 +16,7 @@ namespace Call_of_Crabs
         [STAThread]
         static void Main()
         {
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("En-Us");
             using (var game = new Game1())
                 game.Run();
         }
