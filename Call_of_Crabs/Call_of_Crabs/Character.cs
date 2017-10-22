@@ -107,7 +107,7 @@ namespace Call_of_Crabs
             offsetRight = (basesprite.Location - basecollision.Location).ToVector2();
 
             offsetRight = new Vector2(basesprite.X - basecollision.X, basesprite.Y - basecollision.Y);
-            offsetLeft = new Vector2((- basesprite.Width+basecollision.Width),offsetRight.Y);
+            offsetLeft = new Vector2((- basesprite.Width+basecollision.Width+basecollision.X),offsetRight.Y);
 
             collision = basecollision;
             sprite = basesprite;

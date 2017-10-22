@@ -40,7 +40,7 @@ namespace Call_of_Crabs
        
                 foreach (Tile tile in map.Tiles)
                 {
-                    if (tile != null)
+                    if (tile != null && tile.Type !=TileType.DecorationTile)
                     {
                         Rectangle t;
 
@@ -70,7 +70,7 @@ namespace Call_of_Crabs
 
             float distancetravelled = 0;
 
-            public RevolverBullet(bool right):base(new Rectangle(16,11,10,4),new Rectangle(0,0,30,30),1)
+            public RevolverBullet(bool right):base(new Rectangle(16,11,10,4),new Rectangle(0,0,30,30),2)
             {
                 if (!right)
                 {
@@ -112,7 +112,7 @@ namespace Call_of_Crabs
 
             float distancetravelled = 0;
 
-            public KanoneBullet(bool right) : base(new Rectangle(16, 11, 10, 4), new Rectangle(0, 0, 30, 30), 3)
+            public KanoneBullet(bool right) : base(new Rectangle(12, 6, 15, 15), new Rectangle(0, 0, 30, 30), 5)
             {
                 if (!right)
                 {
@@ -152,7 +152,7 @@ namespace Call_of_Crabs
 
            
 
-            public SeesternBullet(bool right) : base(new Rectangle(16, 11, 10, 4), new Rectangle(0, 0, 30, 30), 1)
+            public SeesternBullet(bool right) : base(new Rectangle(15, 5, 12, 16), new Rectangle(0, 0, 30, 30), 1)
             {
                 if (!right)
                 {
@@ -184,20 +184,19 @@ namespace Call_of_Crabs
         {
             static Animation texture = null;
 
-            public Vector2 velocity = new Vector2(200f, 0.5f);
+            public Vector2 velocity = new Vector2(155f, 5f);
 
             float bulletdrop = 10f;
 
             float distancetravelled = 0;
 
-            public MesserBullet(bool right) : base(new Rectangle(16, 11, 10, 4), new Rectangle(0, 0, 30, 30), 3)
+            public MesserBullet(bool right) : base(new Rectangle(36, 30, 51, 24), new Rectangle(0, 0, 90, 90), 3)
             {
                 if (!right)
                 {
                     velocity.X *= -1;
                     faces = facing.left;
                 }
-                Scale(3, 3);
             }
 
             public override void Draw(SpriteBatch batch)
@@ -221,6 +220,120 @@ namespace Call_of_Crabs
 
         }
 
+        class CthulluBullet : ABullet
+        {
+            static Animation texture = null;
+
+            public Vector2 velocity = new Vector2(900f, 0f);
+
+
+
+            public CthulluBullet(bool right) : base(new Rectangle(27, 12, 60, 60), new Rectangle(0, 0, 90, 90), 10)
+            {
+                if (!right)
+                {
+                    velocity.X *= -1;
+                    faces = facing.left;
+                }
+            }
+
+            public override void Draw(SpriteBatch batch)
+            {
+                if (faces == facing.right) texture.Draw(batch, sprite, Color.White);
+                else texture.Draw(batch, sprite, null, Color.White, 0, new Vector2(0, 0), SpriteEffects.FlipHorizontally, 0);
+            }
+
+            public override void Load(ContentManager contentManager, string filename)
+            {
+                if (texture == null) texture = new Animation(contentManager, "Cthulthuball", 1, 3.0f);
+            }
+
+            public override void Update(GameTime time)
+            {
+                Position += velocity * (float)time.ElapsedGameTime.TotalSeconds;
+            }
+        }
+
+        class SeifenblaseBullet : ABullet
+        {
+            static Animation texture = null;
+
+            public Vector2 velocity = new Vector2(0, 1f);
+
+            float bulletdrop = 1.2f;
+
+            float distancetravelled = 0;
+
+            public SeifenblaseBullet(bool right) : base(new Rectangle(12, 6, 15, 15), new Rectangle(0, 0, 30, 30), 5)
+            {
+                if (!right)
+                {
+                    velocity.X *= -1;
+                    faces = facing.left;
+                }
+
+            }
+
+            public override void Draw(SpriteBatch batch)
+            {
+                if (faces == facing.right) texture.Draw(batch, sprite, Color.White);
+                else texture.Draw(batch, sprite, null, Color.White, 0, new Vector2(0, 0), SpriteEffects.FlipHorizontally, 0);
+            }
+
+            public override void Load(ContentManager contentManager, string filename)
+            {
+                if (texture == null) texture = new Animation(contentManager, "Seifenblase", 1, 3.0f);
+            }
+
+            public override void Update(GameTime time)
+            {
+                Vector2 a = velocity * (float)time.ElapsedGameTime.TotalSeconds;
+                distancetravelled += a.X;
+                velocity.Y = (float)Math.Pow(bulletdrop, (Math.Abs(distancetravelled) / 10));
+                Position += a;
+            }
+
+        }
+
+        class RegenbogenBullet : ABullet
+        {
+            static Animation texture = null;
+
+            public Vector2 velocity = new Vector2(200f, 0.1f);
+
+            float bulletdrop = 1.2f;
+
+            float distancetravelled = 0;
+
+            public RegenbogenBullet(bool right) : base(new Rectangle(12, 6, 15, 15), new Rectangle(0, 0, 30, 30), 5)
+            {
+                if (!right)
+                {
+                    velocity.X *= -1;
+                    faces = facing.left;
+                }
+
+            }
+
+            public override void Draw(SpriteBatch batch)
+            {
+                if (faces == facing.right) texture.Draw(batch, sprite, Color.White);
+                else texture.Draw(batch, sprite, null, Color.White, 0, new Vector2(0, 0), SpriteEffects.FlipHorizontally, 0);
+            }
+
+            public override void Load(ContentManager contentManager, string filename)
+            {
+                if (texture == null) texture = new Animation(contentManager, "Regenbogen", 1, 3.0f);
+            }
+
+            public override void Update(GameTime time)
+            {
+                Vector2 a = velocity * (float)time.ElapsedGameTime.TotalSeconds;
+                distancetravelled += a.X;
+                velocity.Y = (float)Math.Pow(bulletdrop, (Math.Abs(distancetravelled) / 10));
+                Position += a;
+            }
+        }
 
         public static void Load(ContentManager contentManager)
         {
@@ -233,6 +346,12 @@ namespace Call_of_Crabs
             a.Load(contentManager, "");
             a = new MesserBullet(true);
             a.Load(contentManager, "");
+            a = new CthulluBullet(true);
+            a.Load(contentManager, "");
+            a = new SeifenblaseBullet(true);
+            a.Load(contentManager, "");
+            a = new RegenbogenBullet(true);
+            a.Load(contentManager, "");
         }
 
         public enum BulletType
@@ -240,7 +359,10 @@ namespace Call_of_Crabs
             revolver,
             kanone,
             seestern,
-            knife
+            knife,
+            cthullu,
+            seifenblase,
+            regenbogen
         }
 
         static ABullet[] bullets=new ABullet[100];
@@ -266,8 +388,24 @@ namespace Call_of_Crabs
                         bullets[numberofBullets] = new SeesternBullet(right);
                         bullets[numberofBullets++].position = position;
                         break;
+
                     case BulletType.knife:
                         bullets[numberofBullets] = new MesserBullet(right);
+                        bullets[numberofBullets++].position = position;
+                        break;
+
+                    case BulletType.cthullu:
+                        bullets[numberofBullets] = new CthulluBullet(right);
+                        bullets[numberofBullets++].position = position;
+                        break;
+
+                    case BulletType.seifenblase:
+                        bullets[numberofBullets] = new SeifenblaseBullet(right);
+                        bullets[numberofBullets++].position = position;
+                        break;
+
+                    case BulletType.regenbogen:
+                        bullets[numberofBullets] = new RegenbogenBullet(right);
                         bullets[numberofBullets++].position = position;
                         break;
 
