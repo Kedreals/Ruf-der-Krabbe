@@ -841,3 +841,39 @@
 /processorParam:TextureFormat=Color
 /build:Textures/PanzerBackgroundTexture.png
 
+#begin Sounds/Blob.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/Blob.wav
+
+#begin Sounds/Bösesschlitzschlitz.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/Bösesschlitzschlitz.wav
+
+#begin Sounds/PewPew.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/PewPew.wav
+
+#begin Sounds/PewPew2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/PewPew2.wav
+
+#begin Sounds/Schlitzschlitz.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/Schlitzschlitz.wav
+
+#begin Sounds/Schnitzschnitz.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/Schnitzschnitz.wav
+
