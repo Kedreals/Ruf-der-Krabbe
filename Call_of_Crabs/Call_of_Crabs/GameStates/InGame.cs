@@ -50,7 +50,7 @@ namespace Call_of_Crabs.GameStates
 
         public void LoadContent(ContentManager contentManager)
         {
-            background = new Background(contentManager, new string[] { "WaterBackgroundTexture", "FishBackgroundTexture" });
+            background = new Background(contentManager, new string[] { "WaterBackgroundTexture", "FishBackgroundTexture", "PanzerBackgroundTexture" }, new Vector2[] {Vector2.Zero, Vector2.Zero, new Vector2(800, 800)});
             map.Load(contentManager, "TestMap2");
             Player player = new Player();
             player.Load(contentManager, "");

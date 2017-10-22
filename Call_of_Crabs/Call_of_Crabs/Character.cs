@@ -115,9 +115,6 @@ namespace Call_of_Crabs
             hitpoints = hits;
         }
 
-    
-
-
         public abstract void Load(ContentManager contentManager, string filename);
 
 
@@ -165,7 +162,6 @@ namespace Call_of_Crabs
                     else
                     {
                         int sign = Math.Sign(Position.Y - tile.Position.Y);
-                        if (tile.Type == TileType.SurfaceTile)
                         if (sign < 0)
                         {
                             jumpcount = 0;
