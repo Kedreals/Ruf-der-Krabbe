@@ -20,7 +20,7 @@ namespace Call_of_Crabs
 
 
 
-        public KritzlerEnemy(): base(new Rectangle(15, 15, 70, 70), new Rectangle(0, 0, 100, 100),5)
+        public KritzlerEnemy(): base(new Rectangle(15, 15, 70, 70), new Rectangle(0, 0, 100, 100),6)
         {
             ReaktionRadius = 4 * Tile.DefaultSize.X;
         }
@@ -75,7 +75,7 @@ namespace Call_of_Crabs
             {
                 Sound.sounds["Schlitzschlitz"].Play();
                 BulletsEverywhere.SpawnBullet(new Vector2((faces == facing.right) ? (collision.X + collision.Width + 10) : collision.X - 50, collision.Y +10), (faces == facing.right), BulletsEverywhere.BulletType.knife);
-                shotCooldown += 0.5;
+                shotCooldown += 1;
             }
         }
 

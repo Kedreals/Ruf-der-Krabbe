@@ -28,7 +28,7 @@ namespace Call_of_Crabs
 
         private weapon currentweapon=weapon.revolver;
 
-        public Player(): base(new Rectangle(25, 25, 50, 50), new Rectangle(0, 0, 200, 100),3)
+        public Player(): base(new Rectangle(25, 25, 50, 50), new Rectangle(0, 0, 200, 100),10)
         {
                 
         }
@@ -115,10 +115,12 @@ namespace Call_of_Crabs
             {
                 if (shotCooldown < 0)
                 {
+                    
                     Sound.sounds["PewPew2"].Play();
                     switch (currentweapon)
                     {
                         case weapon.revolver:
+                            BulletsEverywhere.SpawnBullet(new Vector2((faces == facing.right) ? (collision.X + collision.Width + 30) : collision.X -30, collision.Y), (faces == facing.right), BulletsEverywhere.BulletType.cthullu);
                             BulletsEverywhere.SpawnBullet(new Vector2((faces==facing.right)?(collision.X + collision.Width + 30):collision.X-40, collision.Y + 11), (faces == facing.right), BulletsEverywhere.BulletType.revolver);
                             shotCooldown += 0.5;
                             break;
@@ -139,6 +141,7 @@ namespace Call_of_Crabs
 
             if (isJumping)
             {
+                
                 Jump(time);
             }
             else
