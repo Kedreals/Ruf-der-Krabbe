@@ -38,6 +38,7 @@ namespace Call_of_Crabs
             shotCooldown -= time.ElapsedGameTime.TotalSeconds;
             if (shotCooldown < 0)
             {
+                Sound.sounds["Bösesschlitzschlitz"].Play();
                 bool right = rand.NextDouble() < 0.5;
                 BulletsEverywhere.SpawnBullet(target + new Vector2(right?-200:200,0), right, BulletsEverywhere.BulletType.cthullu);
                 shotCooldown = 5;
