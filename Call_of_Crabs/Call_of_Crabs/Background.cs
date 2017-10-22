@@ -43,8 +43,8 @@ namespace Call_of_Crabs
                     camTest = cam.GetVisibilityRectangle().X - (points[i].X + width + (int)offsets[i].X);
                 }
 
-                Rectangle destLeft = new Rectangle(new Point(points[i].X - width - (int)offsets[i].X, 0), m_layers[i].Bounds.Size);
-                Rectangle destRight = new Rectangle(new Point(points[i].X + width + (int)offsets[i].X, 0), m_layers[i].Bounds.Size);
+                Rectangle destLeft = new Rectangle(new Point(points[i].X - width - (int)offsets[i].X, (int)offsets[i].Y), m_layers[i].Bounds.Size);
+                Rectangle destRight = new Rectangle(new Point(points[i].X + width + (int)offsets[i].X, (int)offsets[i].Y), m_layers[i].Bounds.Size);
 
                 batch.Draw(m_layers[i], new Rectangle(points[i], m_layers[i].Bounds.Size), Color.White);
                 batch.Draw(m_layers[i], destLeft, Color.White);

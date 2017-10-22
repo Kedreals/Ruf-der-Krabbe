@@ -33,6 +33,10 @@ namespace Call_of_Crabs
             Texture2D texStone = contentManager.Load<Texture2D>("Textures/StoneTexture");
             Texture2D texGrass = contentManager.Load<Texture2D>("Textures/SeagrassTexture");
             Texture2D texCoral = contentManager.Load<Texture2D>("Textures/CoralTexture");
+            Texture2D texCoral2 = contentManager.Load<Texture2D>("Textures/Koralledeko1");
+            Texture2D texCoral3 = contentManager.Load<Texture2D>("Textures/Koralledeko2");
+            Texture2D texCoral4 = contentManager.Load<Texture2D>("Textures/Koralledeko3");
+            Texture2D texCoral5 = contentManager.Load<Texture2D>("Textures/Koralledekofunny1");
 
             Tiles = new Tile[bitmap.Height * bitmap.Width];
 
@@ -70,17 +74,28 @@ namespace Call_of_Crabs
                                 if (r.Next(10) <= 2)
                                 {
                                     Tiles[(i - 1) * bitmap.Width + j] = new Tile(TileType.DecorationTile, new Vector2(j * Tile.DefaultSize.X, (i - 1) * Tile.DefaultSize.Y));
-                                    switch (r.Next(3))
+                                    switch (r.Next(7))
                                     {
                                         case 0:
                                             Tiles[(i - 1) * bitmap.Width + j].SetTexture(texCoral);
-                                            Tiles[(i - 1) * bitmap.Width + j].Scale(new Vector2());
                                             break;
                                         case 1:
                                             Tiles[(i - 1) * bitmap.Width + j].SetTexture(texGrass);
                                             break;
                                         case 2:
                                             Tiles[(i - 1) * bitmap.Width + j].SetTexture(texStone);
+                                            break;
+                                        case 3:
+                                            Tiles[(i - 1) * bitmap.Width + j].SetTexture(texCoral2);
+                                            break;
+                                        case 4:
+                                            Tiles[(i - 1) * bitmap.Width + j].SetTexture(texCoral3);
+                                            break;
+                                        case 5:
+                                            Tiles[(i - 1) * bitmap.Width + j].SetTexture(texCoral4);
+                                            break;
+                                        case 6:
+                                            Tiles[(i - 1) * bitmap.Width + j].SetTexture(texCoral5);
                                             break;
                                     }
                                 }
