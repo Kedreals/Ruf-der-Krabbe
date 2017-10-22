@@ -22,6 +22,9 @@ namespace Call_of_Crabs.GameStates
 
         private Background background;
 
+        private Effect effect;
+        private RenderTarget2D renderTarget;
+
         public void Initialize(GraphicsDevice graphics)
         {
             camera = new Camera2D(graphics);
@@ -41,6 +44,8 @@ namespace Call_of_Crabs.GameStates
             Point loc = new Point(0, 0);//map.Tiles[0].Position.ToPoint();
             Point size = new Point((int)(map.XDim * tileSize.X), (int)(map.YDim * tileSize.Y));
             mapRectangle = new Rectangle(loc, size);
+
+            renderTarget = new RenderTarget2D(graphics, graphics.PresentationParameters.BackBufferWidth, graphics.PresentationParameters.BackBufferHeight);
         }
 
         public void LoadContent(ContentManager contentManager)
@@ -54,7 +59,10 @@ namespace Call_of_Crabs.GameStates
             //kritzler.Position = new Vector2(4, 15) * Tile.DefaultSize;
             character = player;
             BulletsEverywhere.Load(contentManager);
+            
             enemyHandler = new EnemyHandler(contentManager, Level.FirstLevel, player);
+            effect = contentManager.Load<Effect>("Effects/Wobble");
+            effect.CurrentTechnique = effect.Techniques[0];
         }
 
         public EGameState Update(GameTime time)
@@ -75,6 +83,7 @@ namespace Call_of_Crabs.GameStates
             camera.Position = character.collision.Center.ToVector2();
             camera.SetVisibilityContainedIn(mapRectangle);
 
+            effect.Parameters["Time"].SetValue((float)time.TotalGameTime.TotalSeconds);
             if (character.dead)
                 return EGameState.InGame;
 
@@ -83,16 +92,30 @@ namespace Call_of_Crabs.GameStates
 
         public void Draw(SpriteBatch batch)
         {
+            batch.GraphicsDevice.SetRenderTarget(renderTarget);
+
             batch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, camera.GetTransform());
 
             background.Draw(batch,camera);
 
+            batch.End();
+
+
+            batch.GraphicsDevice.SetRenderTarget(null);
+
+            batch.Begin(SpriteSortMode.Deferred, null, null, null, null, effect, null);
+
+            batch.Draw(renderTarget, Vector2.Zero, Color.White);
+
+            batch.End();
+
+            batch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, camera.GetTransform());
             map.Draw(batch);
             BulletsEverywhere.Draw(batch);
             enemyHandler.Draw(batch);
             character.Draw(batch);
-
             batch.End();
+
         }
     }
 }
