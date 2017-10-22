@@ -2,3 +2,4 @@
 Kritzler: 18, 18, 30, 18
 Kritzler: 44, 18, 50, 18, 48, 16
 Kritzler: 57, 9, 63, 9
+Rainbow: 6,3, 21,3

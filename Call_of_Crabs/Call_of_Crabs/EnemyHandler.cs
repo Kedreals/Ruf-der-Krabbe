@@ -165,6 +165,24 @@ namespace Call_of_Crabs
                     m_forwardBackward.Add(1);
                     m_Paths.Add(LoadPath(line.Split(':')[1]));
                 }
+                if (line.StartsWith("Jelly"))
+                {
+                    Character c = new Jellyfish();
+                    c.Load(content, "");
+                    m_Characters.Add(c);
+                    m_t.Add(0);
+                    m_forwardBackward.Add(1);
+                    m_Paths.Add(LoadPath(line.Split(':')[1]));
+                }
+                if (line.StartsWith("Rainbow"))
+                {
+                    Character c = new Rainbowfish();
+                    c.Load(content, "");
+                    m_Characters.Add(c);
+                    m_t.Add(0);
+                    m_forwardBackward.Add(1);
+                    m_Paths.Add(LoadPath(line.Split(':')[1]));
+                }
             }
         }
 
@@ -173,7 +191,10 @@ namespace Call_of_Crabs
             for (int i = 0; i < m_Characters.Count; ++i)
             {
                 if (m_Characters[i].dead)
+                {
+                    m_Characters[i].Update(time);
                     continue;
+                }
 
                 if (m_t[i] > 1)
                 {
@@ -191,7 +212,8 @@ namespace Call_of_Crabs
                 if((m_player.Position-m_Characters[i].Position).LengthSquared() <= m_Characters[i].ReaktionRadius*m_Characters[i].ReaktionRadius)
                 {
                     target = m_player.Position;
-                    m_Characters[i].ReactToPlayer(time, target);
+                    if(m_Characters[i].ReactToPlayer(time, target, m_Paths[i][m_t[i]]))
+                        m_t[i] += m_forwardBackward[i]*0.1f;
                 }
                 else if (m_Characters[i].Move(target, time))
                     m_t[i] += m_forwardBackward[i] * 0.1f;

@@ -258,7 +258,7 @@ namespace Call_of_Crabs
         {
             static Animation texture = null;
 
-            public Vector2 velocity = new Vector2(0, 1f);
+            public Vector2 velocity = new Vector2(0, 100f);
 
             float bulletdrop = 1.2f;
 
@@ -289,7 +289,7 @@ namespace Call_of_Crabs
             {
                 Vector2 a = velocity * (float)time.ElapsedGameTime.TotalSeconds;
                 distancetravelled += a.X;
-                velocity.Y = (float)Math.Pow(bulletdrop, (Math.Abs(distancetravelled) / 10));
+                velocity.X = (float)Math.Pow(bulletdrop, (Math.Abs(distancetravelled) / 10));
                 Position += a;
             }
 
