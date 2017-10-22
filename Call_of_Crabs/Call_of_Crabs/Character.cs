@@ -56,9 +56,9 @@ namespace Call_of_Crabs
             dead = true;
         }
 
-        public virtual void ReactToPlayer(GameTime time, Vector2 playerPos, Vector2 path)
+        public virtual bool ReactToPlayer(GameTime time, Vector2 playerPos, Vector2 path)
         {
-
+            return true;
         }
 
         public void Jump(GameTime time)

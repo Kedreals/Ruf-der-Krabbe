@@ -57,11 +57,12 @@ namespace Call_of_Crabs
             return res;
         }
 
-        public override void ReactToPlayer(GameTime time, Vector2 playerPos, Vector2 path)
+        public override bool ReactToPlayer(GameTime time, Vector2 playerPos, Vector2 path)
         {
-            if (dead) return;
+            if (dead) return false;
             Move(playerPos, time);
             Shoot(playerPos, time);
+            return false;
         }
 
         double shotCooldown = 0.0;
@@ -85,7 +86,7 @@ namespace Call_of_Crabs
         public override void Update(GameTime time)
         {
             
-            if (!isJumping)
+            if (!isJumping || dead)
                 Position += new Vector2(0, 100f) * (float)time.ElapsedGameTime.TotalSeconds;
 
         }
