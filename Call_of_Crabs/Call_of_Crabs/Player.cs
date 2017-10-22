@@ -28,7 +28,7 @@ namespace Call_of_Crabs
 
         private weapon currentweapon=weapon.revolver;
 
-        public Player(): base(new Rectangle(25, 25, 100, 50), new Rectangle(0, 0, 200, 100),3)
+        public Player(): base(new Rectangle(25, 25, 50, 50), new Rectangle(0, 0, 200, 100),3)
         {
                 
         }
