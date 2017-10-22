@@ -75,6 +75,9 @@ namespace Call_of_Crabs.GameStates
             camera.Position = character.collision.Center.ToVector2();
             camera.SetVisibilityContainedIn(mapRectangle);
 
+            if (character.dead)
+                return EGameState.Lost;
+
             return EGameState.InGame;
         }
 
