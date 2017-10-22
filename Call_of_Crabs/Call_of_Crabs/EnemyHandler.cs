@@ -146,6 +146,8 @@ namespace Call_of_Crabs
             return new Path(va);
         }
 
+        public bool BossIsStillAlive { get; private set; } = true;
+
         private void LoadFirstLevel(ContentManager content)
         {
             StreamReader streamReader = new StreamReader("EnemyPositionsForLevels/Level1.txt");
@@ -192,17 +194,32 @@ namespace Call_of_Crabs
                     m_forwardBackward.Add(1);
                     m_Paths.Add(LoadPath(line.Split(':')[1]));
                 }
+                if (line.StartsWith("Cthulhu"))
+                {
+                    Character c = new Cthulhu();
+                    c.Load(content, "");
+                    m_Characters.Add(c);
+                    m_t.Add(0);
+                    m_forwardBackward.Add(1);
+                    m_Paths.Add(LoadPath(line.Split(':')[1]));
+                }
             }
         }
 
         public void Update(GameTime time)
         {
+            BossIsStillAlive = false;
             for (int i = 0; i < m_Characters.Count; ++i)
             {
                 if (m_Characters[i].dead)
                 {
                     m_Characters[i].Update(time);
                     continue;
+                }
+
+                if(m_Characters[i].IsBoss)
+                {
+                    BossIsStillAlive = true;
                 }
 
                 if (m_t[i] > 1)

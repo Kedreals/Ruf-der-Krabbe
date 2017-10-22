@@ -74,6 +74,9 @@ namespace Call_of_Crabs.GameStates
 
             enemyHandler.Update(time);
 
+            if (!enemyHandler.BossIsStillAlive)
+                return EGameState.Won;
+
             List<Character> c = enemyHandler.List;
             c.Add(character);
 

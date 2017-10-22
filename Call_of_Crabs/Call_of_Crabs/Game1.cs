@@ -72,6 +72,9 @@ namespace Call_of_Crabs
                 case EGameState.Lost:
                     gameState = new Lost();
                     break;
+                case EGameState.Won:
+                    gameState = new Won();
+                    break;
                 default:
                     Exit();
                     gameState = null;
