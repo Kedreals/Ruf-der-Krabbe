@@ -88,7 +88,7 @@ namespace Call_of_Crabs.GameStates
 
             effect.Parameters["Time"].SetValue((float)time.TotalGameTime.TotalSeconds);
             if (character.dead)
-                return EGameState.InGame;
+                return EGameState.Lost;
 
             return EGameState.InGame;
         }
