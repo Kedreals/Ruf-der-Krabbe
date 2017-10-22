@@ -28,6 +28,7 @@ namespace Call_of_Crabs
 
             Texture2D texSurface = contentManager.Load<Texture2D>("Textures/SurfaceTileTexture");
             Texture2D texInner = contentManager.Load<Texture2D>("Textures/InnerTileTexture");
+            Texture2D texTrap = contentManager.Load<Texture2D>("Textures/TrapTileTexture");
             Texture2D texShell = contentManager.Load<Texture2D>("Textures/ShellTileTexture");
             Texture2D texStone = contentManager.Load<Texture2D>("Textures/StoneTexture");
             Texture2D texGrass = contentManager.Load<Texture2D>("Textures/SeagrassTexture");
@@ -57,7 +58,15 @@ namespace Call_of_Crabs
                                 Tiles[i * bitmap.Width + j].SetTexture(texInner);
                                 break;
                             case TileType.SurfaceTile:
-                                Tiles[i * bitmap.Width + j].SetTexture(texSurface);
+                                if (r.Next(10) < 2)
+                                {
+                                    Tiles[i * bitmap.Width + j].SetTexture(texShell);
+                                }
+                                else
+                                {
+                                    Tiles[i * bitmap.Width + j].SetTexture(texSurface);
+                                }
+                                
                                 if (r.Next(10) <= 2)
                                 {
                                     Tiles[(i - 1) * bitmap.Width + j] = new Tile(TileType.DecorationTile, new Vector2(j * Tile.DefaultSize.X, (i - 1) * Tile.DefaultSize.Y));
@@ -80,8 +89,8 @@ namespace Call_of_Crabs
                     }
                     else if (c == Color.Red)
                     {
-                        Tiles[i * bitmap.Width + j] = new Tile(TileType.ShellTile, new Vector2(j * Tile.DefaultSize.X, i * Tile.DefaultSize.Y), isHostile: true, damage: 10);
-                        Tiles[i * bitmap.Width + j].SetTexture(texShell);
+                        Tiles[i * bitmap.Width + j] = new Tile(TileType.TrapTile, new Vector2(j * Tile.DefaultSize.X, i * Tile.DefaultSize.Y), isHostile: true, damage: 10);
+                        Tiles[i * bitmap.Width + j].SetTexture(texTrap);
                     }
                 }
             }

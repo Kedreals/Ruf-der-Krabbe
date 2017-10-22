@@ -14,6 +14,7 @@ namespace Call_of_Crabs
         InnerTile,
         SurfaceTile,
         ShellTile,
+        TrapTile,
         DecorationTile
     }
 
