@@ -55,6 +55,7 @@ namespace Call_of_Crabs.GameStates
                 c.Load(contentManager, "");
             }
             BulletsEverywhere.Load(contentManager);
+            character.ElementAt(1).Position = new Vector2(100, 100);
         }
 
         public EGameState Update(GameTime time)
