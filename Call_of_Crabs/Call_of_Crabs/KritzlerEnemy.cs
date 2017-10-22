@@ -57,6 +57,24 @@ namespace Call_of_Crabs
             return res;
         }
 
+        public override void ReactToPlayer(GameTime time, Vector2 playerPos)
+        {
+            Move(playerPos, time);
+            Shoot(playerPos, time);
+        }
+
+        double shotCooldown = 0.0;
+
+        private void Shoot(Vector2 target, GameTime time)
+        {
+            shotCooldown -= time.ElapsedGameTime.TotalSeconds;
+            if (shotCooldown < 0)
+            {
+                BulletsEverywhere.SpawnBullet(new Vector2((faces == facing.right) ? (collision.X + collision.Width + 2) : collision.X - 20, collision.Y + 10), (faces == facing.right), BulletsEverywhere.BulletType.revolver);
+                shotCooldown += 0.5;
+            }
+        }
+
         public override void Load(ContentManager contentManager, string filename)
         {
             texture = contentManager.Load<Texture2D>("Textures/" + "Kitzler");
