@@ -51,6 +51,11 @@ namespace Call_of_Crabs
 
         public virtual float ReaktionRadius { get; protected set; } = 0;
 
+        public virtual void Die()
+        {
+            dead = true;
+        }
+
         public virtual void ReactToPlayer(GameTime time, Vector2 playerPos)
         {
 
