@@ -19,7 +19,7 @@ namespace Call_of_Crabs
 
         public override float ReaktionRadius { get; protected set; } = 4 * Tile.DefaultSize.X;
 
-        public Kraken() : base(new Rectangle(14,31,69,38), new Rectangle(0,0,100,100), 2)
+        public Kraken() : base(new Rectangle(34,0,28,58), new Rectangle(0,0,150,100), 2)
         {
 
         }
