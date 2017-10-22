@@ -72,7 +72,7 @@ namespace Call_of_Crabs
             Kanonetexture.Update(time);
             Seesterntexture.Update(time);
 
-            if (Controls.GetKey(Controls.EKey.Up).HasJustBeenPressed() && jumpcount < 200)
+            if (Controls.GetKey(Controls.EKey.Up).HasJustBeenPressed() && jumpcount < 5)
             {
                 isJumping = true;
                 currjumpduration = 0;
