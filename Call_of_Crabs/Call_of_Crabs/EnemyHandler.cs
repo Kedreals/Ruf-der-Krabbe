@@ -192,6 +192,15 @@ namespace Call_of_Crabs
                     m_forwardBackward.Add(1);
                     m_Paths.Add(LoadPath(line.Split(':')[1]));
                 }
+                if (line.StartsWith("Cthulhu"))
+                {
+                    Character c = new Kraken();
+                    c.Load(content, "");
+                    m_Characters.Add(c);
+                    m_t.Add(0);
+                    m_forwardBackward.Add(1);
+                    m_Paths.Add(LoadPath(line.Split(':')[1]));
+                }
             }
         }
 
