@@ -54,7 +54,7 @@ namespace Call_of_Crabs.GameStates
             //kritzler.Position = new Vector2(4, 15) * Tile.DefaultSize;
             character = player;
             BulletsEverywhere.Load(contentManager);
-            enemyHandler = new EnemyHandler(contentManager, Level.FirstLevel);
+            enemyHandler = new EnemyHandler(contentManager, Level.FirstLevel, player);
         }
 
         public EGameState Update(GameTime time)

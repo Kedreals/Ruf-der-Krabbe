@@ -104,9 +104,12 @@ namespace Call_of_Crabs
 
         public List<Character> List { get { return new List<Character>(m_Characters); } }
 
+        private Player m_player;
+
         
-        public EnemyHandler(ContentManager content, Level level)
+        public EnemyHandler(ContentManager content, Level level, Player player)
         {
+            m_player = player;
             switch(level)
             {
                 case Level.FirstLevel:
@@ -125,7 +128,7 @@ namespace Call_of_Crabs
             m_Characters.Add(new KritzlerEnemy());
             m_Characters[0].Load(content, "");
             m_Characters[0].Position = new Vector2(700, 450);
-            m_Paths.Add(new Path(new Vector2[] { new Vector2(700, 450), new Vector2(900, 450), new Vector2(900,250) }));
+            m_Paths.Add(new Path(new Vector2[] { new Vector2(700, 450), new Vector2(900, 450) }));
         }
 
         public void Update(GameTime time)
@@ -145,7 +148,14 @@ namespace Call_of_Crabs
                     m_forwardBackward[i] = 1;
                 }
 
-                if (m_Characters[i].Move(m_Paths[i][m_t[i]], time))
+                Vector2 target = m_Paths[i][m_t[i]];
+
+                if((m_player.Position-m_Characters[i].Position).LengthSquared() <= m_Characters[i].ReaktionRadius*m_Characters[i].ReaktionRadius)
+                {
+                    target = m_player.Position;
+                    m_Characters[i].ReactToPlayer(time, target);
+                }
+                else if (m_Characters[i].Move(target, time))
                     m_t[i] += m_forwardBackward[i] * 0.1f;
 
                 m_Characters[i].Update(time);

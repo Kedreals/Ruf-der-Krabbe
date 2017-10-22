@@ -13,14 +13,16 @@ namespace Call_of_Crabs
     {
         public Texture2D texture;
 
-        float verticalSpeed = 101.0f;
+        
         float horizontalSpeed = 1.0f;
+        public override float ReaktionRadius { get; protected set; }
+
 
 
 
         public KritzlerEnemy(): base(new Rectangle(15, 15, 70, 70), new Rectangle(0, 0, 100, 100),5)
         {
-            
+            ReaktionRadius = 4 * Tile.DefaultSize.X;
         }
 
         public override bool Move(Vector2 target, GameTime time)
@@ -30,12 +32,21 @@ namespace Call_of_Crabs
             float verticalDot = Vector2.Dot(d, new Vector2(0, 1));
             float horizontalDot = Vector2.Dot(d, new Vector2(1, 0));
 
-            bool res = Math.Abs(verticalDot) <= verticalSpeed && Math.Abs(horizontalDot) <= horizontalSpeed;
+            bool res = /*Math.Abs(verticalDot) <= verticalSpeed &&*/ Math.Abs(horizontalDot) <= horizontalSpeed;
 
-            if (verticalDot > verticalSpeed)
-                d.Y = verticalSpeed;
-            if (verticalDot < -verticalSpeed)
-                d.Y = -verticalSpeed;
+            d.Y = 0;
+            if(verticalDot < 0 && jumpcount < 2 && !isJumping)
+            {
+                isJumping = true;
+                currjumpduration = 0;
+                jumpcount++;
+                currjumpheight = 0;
+            }
+
+            if (isJumping)
+                Jump(time);
+            
+
             if (horizontalDot > horizontalSpeed)
                 d.X = horizontalSpeed;
             if (horizontalDot < horizontalSpeed)
@@ -53,9 +64,8 @@ namespace Call_of_Crabs
 
         public override void Update(GameTime time)
         {
-
-            //schwerkraft
-            Position += new Vector2(0, 100f) * (float)time.ElapsedGameTime.TotalSeconds;
+            if (!isJumping)
+                Position += new Vector2(0, 100f) * (float)time.ElapsedGameTime.TotalSeconds;
 
         }
 

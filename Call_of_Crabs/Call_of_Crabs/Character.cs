@@ -49,6 +49,13 @@ namespace Call_of_Crabs
         protected bool isJumping = false;
         protected float jumpduration = 0.5f;
 
+        public virtual float ReaktionRadius { get; protected set; } = 0;
+
+        public virtual void ReactToPlayer(GameTime time, Vector2 playerPos)
+        {
+
+        }
+
         public void Jump(GameTime time)
         {
             currjumpduration += (float)time.ElapsedGameTime.TotalSeconds;
@@ -58,7 +65,7 @@ namespace Call_of_Crabs
 
             currjumpheight -= dy*(float)time.ElapsedGameTime.TotalSeconds;
 
-            if (currjumpheight > jumpheight - 0.1f)
+            if (dy > 0)
                 isJumping = false;
         }
 
