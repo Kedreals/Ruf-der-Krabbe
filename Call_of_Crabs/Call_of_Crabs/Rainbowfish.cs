@@ -26,6 +26,7 @@ namespace Call_of_Crabs
 
         public override bool ReactToPlayer(GameTime time, Vector2 playerPos, Vector2 path)
         {
+            if (dead) return false;
             Vector2 d = playerPos - Position;
 
             float verticalDot = Vector2.Dot(d, new Vector2(0, 1));

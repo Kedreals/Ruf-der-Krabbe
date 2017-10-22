@@ -264,7 +264,7 @@ namespace Call_of_Crabs
 
             float distancetravelled = 0;
 
-            public SeifenblaseBullet(bool right) : base(new Rectangle(12, 6, 15, 15), new Rectangle(0, 0, 30, 30), 5)
+            public SeifenblaseBullet(bool right) : base(new Rectangle(12, 6, 15, 15), new Rectangle(0, 0, 30, 30), 1)
             {
                 if (!right)
                 {
@@ -305,7 +305,7 @@ namespace Call_of_Crabs
 
             float distancetravelled = 0;
 
-            public RegenbogenBullet(bool right) : base(new Rectangle(12, 6, 15, 15), new Rectangle(0, 0, 30, 30), 5)
+            public RegenbogenBullet(bool right) : base(new Rectangle(12, 6, 15, 15), new Rectangle(0, 0, 30, 30), 2)
             {
                 if (!right)
                 {
@@ -335,6 +335,44 @@ namespace Call_of_Crabs
             }
         }
 
+        class SpitzspitzBullet : ABullet
+        {
+            static Animation texture = null;
+
+            public Vector2 velocity = new Vector2(0, 0);
+
+            float existedTime = 0;
+
+            public SpitzspitzBullet(bool right) : base(new Rectangle(0, 20, 30, 10), new Rectangle(0, 0, 30, 30), 2)
+            {
+                if (!right)
+                {
+                    velocity.X *= -1;
+                    faces = facing.left;
+                }
+
+            }
+
+            public override void Draw(SpriteBatch batch)
+            {
+                if (faces == facing.right) texture.Draw(batch, sprite, Color.White);
+                else texture.Draw(batch, sprite, null, Color.White, 0, new Vector2(0, 0), SpriteEffects.FlipHorizontally, 0);
+            }
+
+            public override void Load(ContentManager contentManager, string filename)
+            {
+                if (texture == null) texture = new Animation(contentManager, "Spitzispitz", 1, 3.0f);
+            }
+
+            public override void Update(GameTime time)
+            {
+                existedTime+= (float)time.ElapsedGameTime.TotalSeconds;
+                if (existedTime <= 2) getHit(100);
+                Vector2 a = velocity * (float)time.ElapsedGameTime.TotalSeconds;
+                Position += a;
+            }
+        }
+
         public static void Load(ContentManager contentManager)
         {
             ABullet a;
@@ -352,6 +390,8 @@ namespace Call_of_Crabs
             a.Load(contentManager, "");
             a = new RegenbogenBullet(true);
             a.Load(contentManager, "");
+            a = new SpitzspitzBullet(true);
+            a.Load(contentManager, "");
         }
 
         public enum BulletType
@@ -362,7 +402,8 @@ namespace Call_of_Crabs
             knife,
             cthullu,
             seifenblase,
-            regenbogen
+            regenbogen,
+            spitzspitz
         }
 
         static ABullet[] bullets=new ABullet[100];
@@ -406,6 +447,11 @@ namespace Call_of_Crabs
 
                     case BulletType.regenbogen:
                         bullets[numberofBullets] = new RegenbogenBullet(right);
+                        bullets[numberofBullets++].position = position;
+                        break;
+
+                    case BulletType.spitzspitz:
+                        bullets[numberofBullets] = new SpitzspitzBullet(right);
                         bullets[numberofBullets++].position = position;
                         break;
 
