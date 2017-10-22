@@ -57,7 +57,7 @@ namespace Call_of_Crabs
             return res;
         }
 
-        public override void ReactToPlayer(GameTime time, Vector2 playerPos)
+        public override void ReactToPlayer(GameTime time, Vector2 playerPos, Vector2 path)
         {
             if (dead) return;
             Move(playerPos, time);
