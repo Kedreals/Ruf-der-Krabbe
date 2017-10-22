@@ -56,9 +56,9 @@ namespace Call_of_Crabs
             dead = true;
         }
 
-        public virtual void ReactToPlayer(GameTime time, Vector2 playerPos)
+        public virtual bool ReactToPlayer(GameTime time, Vector2 playerPos, Vector2 path)
         {
-
+            return true;
         }
 
         public void Jump(GameTime time)
@@ -115,9 +115,6 @@ namespace Call_of_Crabs
             hitpoints = hits;
         }
 
-    
-
-
         public abstract void Load(ContentManager contentManager, string filename);
 
 
@@ -165,7 +162,6 @@ namespace Call_of_Crabs
                     else
                     {
                         int sign = Math.Sign(Position.Y - tile.Position.Y);
-                        if (tile.Type == TileType.SurfaceTile)
                         if (sign < 0)
                         {
                             jumpcount = 0;
