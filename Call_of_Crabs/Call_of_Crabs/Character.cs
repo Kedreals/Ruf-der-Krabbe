@@ -33,7 +33,7 @@ namespace Call_of_Crabs
 
         public facing faces = facing.right;
 
-        private Vector2 position;
+        public Vector2 position;
 
         public float scale = 1;
 
@@ -78,8 +78,8 @@ namespace Call_of_Crabs
                 position = value;
                 collision.Location = position.ToPoint();
                 threshold += (lastpos.X - position.X);
-                if (threshold >= 2) { faces = facing.left; threshold -= 2; }
-                else if (threshold <= -2) { faces = facing.right; threshold += 2; }
+                if (threshold >= 2) { faces = facing.left; threshold = 0; }
+                else if (threshold <= -2) { faces = facing.right; threshold = 0; }
                 if(faces==facing.right)sprite.Location = collision.Location + offsetRight.ToPoint();
                 else sprite.Location = collision.Location + offsetLeft.ToPoint();
             }
