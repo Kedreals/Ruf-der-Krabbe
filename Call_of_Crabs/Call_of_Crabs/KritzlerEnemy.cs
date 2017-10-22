@@ -59,6 +59,7 @@ namespace Call_of_Crabs
 
         public override void ReactToPlayer(GameTime time, Vector2 playerPos)
         {
+            if (dead) return;
             Move(playerPos, time);
             Shoot(playerPos, time);
         }
@@ -70,7 +71,7 @@ namespace Call_of_Crabs
             shotCooldown -= time.ElapsedGameTime.TotalSeconds;
             if (shotCooldown < 0)
             {
-                BulletsEverywhere.SpawnBullet(new Vector2((faces == facing.right) ? (collision.X + collision.Width + 2) : collision.X - 20, collision.Y + 10), (faces == facing.right), BulletsEverywhere.BulletType.revolver);
+                BulletsEverywhere.SpawnBullet(new Vector2((faces == facing.right) ? (collision.X + collision.Width + 29) : collision.X - 20, collision.Y - 10), (faces == facing.right), BulletsEverywhere.BulletType.knife);
                 shotCooldown += 0.5;
             }
         }
@@ -82,6 +83,8 @@ namespace Call_of_Crabs
 
         public override void Update(GameTime time)
         {
+            if (dead) return;
+
             if (!isJumping)
                 Position += new Vector2(0, 100f) * (float)time.ElapsedGameTime.TotalSeconds;
 
@@ -89,8 +92,9 @@ namespace Call_of_Crabs
 
         public override void Draw(SpriteBatch batch)
         {
+            if (dead) return;
             if (faces == facing.right) batch.Draw(texture, sprite, Color.White);
-            else batch.Draw(texture, sprite, null, Color.White, 0, new Vector2(-sprite.Width/2, 0), SpriteEffects.FlipHorizontally, 0);
+            else batch.Draw(texture, sprite, null, Color.White, 0, new Vector2(0, 0), SpriteEffects.FlipHorizontally, 0);
         }
 
 

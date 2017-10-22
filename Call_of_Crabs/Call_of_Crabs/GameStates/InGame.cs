@@ -76,7 +76,7 @@ namespace Call_of_Crabs.GameStates
             camera.SetVisibilityContainedIn(mapRectangle);
 
             if (character.dead)
-                return EGameState.Lost;
+                return EGameState.InGame;
 
             return EGameState.InGame;
         }

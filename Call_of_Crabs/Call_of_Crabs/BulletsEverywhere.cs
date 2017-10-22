@@ -82,7 +82,7 @@ namespace Call_of_Crabs
             public override void Draw(SpriteBatch batch)
             {
                 if (faces == facing.right) texture.Draw(batch, sprite, Color.White);
-                else texture.Draw(batch, sprite, null, Color.White, 0, new Vector2(sprite.Width, 0), SpriteEffects.FlipHorizontally, 0);
+                else texture.Draw(batch, sprite, null, Color.White, 0, new Vector2(0, 0), SpriteEffects.FlipHorizontally, 0);
             }
 
             public override void Load(ContentManager contentManager, string filename)
@@ -125,7 +125,7 @@ namespace Call_of_Crabs
             public override void Draw(SpriteBatch batch)
             {
                 if (faces == facing.right) texture.Draw(batch, sprite, Color.White);
-                else texture.Draw(batch, sprite, null, Color.White, 0, new Vector2(sprite.Width, 0), SpriteEffects.FlipHorizontally, 0);
+                else texture.Draw(batch, sprite, null, Color.White, 0, new Vector2(0, 0), SpriteEffects.FlipHorizontally, 0);
             }
 
             public override void Load(ContentManager contentManager, string filename)
@@ -164,7 +164,7 @@ namespace Call_of_Crabs
             public override void Draw(SpriteBatch batch)
             {
                 if (faces == facing.right) texture.Draw(batch, sprite, Color.White);
-                else texture.Draw(batch, sprite, null, Color.White, 0, new Vector2(sprite.Width, 0), SpriteEffects.FlipHorizontally, 0);
+                else texture.Draw(batch, sprite, null, Color.White, 0, new Vector2(0, 0), SpriteEffects.FlipHorizontally, 0);
             }
 
             public override void Load(ContentManager contentManager, string filename)
@@ -179,7 +179,49 @@ namespace Call_of_Crabs
 
 
         }
-        
+
+        class MesserBullet : ABullet
+        {
+            static Animation texture = null;
+
+            public Vector2 velocity = new Vector2(200f, 0.5f);
+
+            float bulletdrop = 10f;
+
+            float distancetravelled = 0;
+
+            public MesserBullet(bool right) : base(new Rectangle(16, 11, 10, 4), new Rectangle(0, 0, 30, 30), 3)
+            {
+                if (!right)
+                {
+                    velocity.X *= -1;
+                    faces = facing.left;
+                }
+                Scale(3, 3);
+            }
+
+            public override void Draw(SpriteBatch batch)
+            {
+                if (faces == facing.right) texture.Draw(batch, sprite, Color.White);
+                else texture.Draw(batch, sprite, null, Color.White, 0, new Vector2(0, 0), SpriteEffects.FlipHorizontally, 0);
+            }
+
+            public override void Load(ContentManager contentManager, string filename)
+            {
+                if (texture == null) texture = new Animation(contentManager, "Messer", 1, 3.0f);
+            }
+
+            public override void Update(GameTime time)
+            {
+                Vector2 a = velocity * (float)time.ElapsedGameTime.TotalSeconds;
+                distancetravelled += a.X;
+                velocity.Y = (float)Math.Pow(bulletdrop, (Math.Abs(distancetravelled) / 10));
+                Position += a;
+            }
+
+        }
+
+
         public static void Load(ContentManager contentManager)
         {
             ABullet a;
@@ -189,13 +231,16 @@ namespace Call_of_Crabs
             a.Load(contentManager, "");
             a = new SeesternBullet(true);
             a.Load(contentManager, "");
+            a = new MesserBullet(true);
+            a.Load(contentManager, "");
         }
 
         public enum BulletType
         {
             revolver,
             kanone,
-            seestern
+            seestern,
+            knife
         }
 
         static ABullet[] bullets=new ABullet[100];
@@ -221,6 +266,11 @@ namespace Call_of_Crabs
                         bullets[numberofBullets] = new SeesternBullet(right);
                         bullets[numberofBullets++].position = position;
                         break;
+                    case BulletType.knife:
+                        bullets[numberofBullets] = new MesserBullet(right);
+                        bullets[numberofBullets++].position = position;
+                        break;
+
 
                 }
 
