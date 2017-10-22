@@ -115,6 +115,7 @@ namespace Call_of_Crabs
             {
                 if (shotCooldown < 0)
                 {
+                    Sound.sounds["PewPew2"].Play();
                     switch (currentweapon)
                     {
                         case weapon.revolver:

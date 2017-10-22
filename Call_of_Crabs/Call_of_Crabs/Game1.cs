@@ -46,7 +46,7 @@ namespace Call_of_Crabs
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            Sound.Load(Content);
             // TODO: use this.Content to load your game content here
         }
 
