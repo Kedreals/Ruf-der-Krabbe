@@ -118,17 +118,17 @@ namespace Call_of_Crabs
                     switch (currentweapon)
                     {
                         case weapon.revolver:
-                            BulletsEverywhere.SpawnBullet(new Vector2((faces==facing.right)?(collision.X + collision.Width + 2):collision.X-20, collision.Y + 10), (faces == facing.right), BulletsEverywhere.BulletType.revolver);
+                            BulletsEverywhere.SpawnBullet(new Vector2((faces==facing.right)?(collision.X + collision.Width + 30):collision.X-40, collision.Y + 11), (faces == facing.right), BulletsEverywhere.BulletType.revolver);
                             shotCooldown += 0.5;
                             break;
 
                         case weapon.kanone:
-                            BulletsEverywhere.SpawnBullet(new Vector2((faces == facing.right) ? (collision.X + collision.Width + 2) : collision.X - 20, collision.Y + 15), (faces == facing.right), BulletsEverywhere.BulletType.kanone);
+                            BulletsEverywhere.SpawnBullet(new Vector2((faces == facing.right) ? (collision.X + collision.Width + 30) : collision.X - 40, collision.Y + 13), (faces == facing.right), BulletsEverywhere.BulletType.kanone);
                             shotCooldown += 1;
                             break;
 
                         case weapon.seestern:
-                            BulletsEverywhere.SpawnBullet(new Vector2((faces == facing.right) ? (collision.X + collision.Width + 2) : collision.X - 20, collision.Y + 12), (faces == facing.right), BulletsEverywhere.BulletType.seestern);
+                            BulletsEverywhere.SpawnBullet(new Vector2((faces == facing.right) ? (collision.X + collision.Width + 30) : collision.X - 40, collision.Y + 11), (faces == facing.right), BulletsEverywhere.BulletType.seestern);
                             shotCooldown += 0.6;
                             break;
                     }
