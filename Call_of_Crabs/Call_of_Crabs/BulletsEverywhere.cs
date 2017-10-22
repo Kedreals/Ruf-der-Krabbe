@@ -72,7 +72,11 @@ namespace Call_of_Crabs
 
             public RevolverBullet(bool right):base(new Rectangle(16,11,10,4),new Rectangle(0,0,30,30),1)
             {
-                if (!right) velocity.X *= -1;
+                if (!right)
+                {
+                    velocity.X *= -1;
+                    faces = facing.left;
+                }
             }
 
             public override void Draw(SpriteBatch batch)
@@ -88,9 +92,10 @@ namespace Call_of_Crabs
 
             public override void Update(GameTime time)
             {
+                
                 Vector2 a = velocity * (float)time.ElapsedGameTime.TotalSeconds;
                 distancetravelled += a.X;
-                velocity.Y = (float)Math.Pow(bulletdrop, (distancetravelled / 10));
+                velocity.Y = (float)Math.Pow(bulletdrop, (Math.Abs(distancetravelled) / 10));
                 Position += a;
             }
 
@@ -109,7 +114,12 @@ namespace Call_of_Crabs
 
             public KanoneBullet(bool right) : base(new Rectangle(16, 11, 10, 4), new Rectangle(0, 0, 30, 30), 3)
             {
-                if (!right) velocity.X *= -1;
+                if (!right)
+                {
+                    velocity.X *= -1;
+                    faces = facing.left;
+                }
+                
             }
 
             public override void Draw(SpriteBatch batch)
@@ -127,7 +137,7 @@ namespace Call_of_Crabs
             {
                 Vector2 a = velocity * (float)time.ElapsedGameTime.TotalSeconds;
                 distancetravelled += a.X;
-                velocity.Y = (float)Math.Pow(bulletdrop, (distancetravelled / 10));
+                velocity.Y = (float)Math.Pow(bulletdrop, (Math.Abs(distancetravelled) / 10));
                 Position += a;
             }
 
@@ -144,7 +154,11 @@ namespace Call_of_Crabs
 
             public SeesternBullet(bool right) : base(new Rectangle(16, 11, 10, 4), new Rectangle(0, 0, 30, 30), 1)
             {
-                if (!right) velocity.X *= -1;
+                if (!right)
+                {
+                    velocity.X *= -1;
+                    faces = facing.left;
+                }
             }
 
             public override void Draw(SpriteBatch batch)
@@ -195,17 +209,17 @@ namespace Call_of_Crabs
                 {
                     case BulletType.revolver:
                         bullets[numberofBullets] = new RevolverBullet(right);
-                        bullets[numberofBullets++].Position = position;
+                        bullets[numberofBullets++].position = position;
                         break;
 
                     case BulletType.kanone:
                         bullets[numberofBullets] = new KanoneBullet(right);
-                        bullets[numberofBullets++].Position = position;
+                        bullets[numberofBullets++].position = position;
                         break;
 
                     case BulletType.seestern:
                         bullets[numberofBullets] = new SeesternBullet(right);
-                        bullets[numberofBullets++].Position = position;
+                        bullets[numberofBullets++].position = position;
                         break;
 
                 }
