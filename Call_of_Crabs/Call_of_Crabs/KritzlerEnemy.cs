@@ -70,8 +70,9 @@ namespace Call_of_Crabs
         }
 
         public override void Draw(SpriteBatch batch)
-        {          
-             batch.Draw(texture, sprite, Color.White);
+        {
+            if (faces == facing.right) batch.Draw(texture, sprite, Color.White);
+            else batch.Draw(texture, sprite, null, Color.White, 0, new Vector2(0, 0), SpriteEffects.FlipHorizontally, 0);
         }
 
 
