@@ -154,17 +154,17 @@ namespace Call_of_Crabs
             {
                 case weapon.revolver:
                     if (faces == facing.right) Revolvertexture.Draw(batch, sprite, Color.White);
-                    else Revolvertexture.Draw(batch, sprite, null, Color.White, 0, new Vector2(sprite.Width,0), SpriteEffects.FlipHorizontally, 0);
+                    else Revolvertexture.Draw(batch, sprite, null, Color.White, 0, new Vector2(0,0), SpriteEffects.FlipHorizontally, 0);
                     break;
 
                 case weapon.kanone:
                     if (faces == facing.right) Kanonetexture.Draw(batch, sprite, Color.White);
-                    else Kanonetexture.Draw(batch, sprite, null, Color.White, 0, new Vector2(sprite.Width, 0), SpriteEffects.FlipHorizontally, 0);
+                    else Kanonetexture.Draw(batch, sprite, null, Color.White, 0, new Vector2(0, 0), SpriteEffects.FlipHorizontally, 0);
                     break;
 
                 case weapon.seestern:
                     if (faces == facing.right) Seesterntexture.Draw(batch, sprite, Color.White);
-                    else Seesterntexture.Draw(batch, sprite, null, Color.White, 0, new Vector2(sprite.Width, 0), SpriteEffects.FlipHorizontally, 0);
+                    else Seesterntexture.Draw(batch, sprite, null, Color.White, 0, new Vector2(0, 0), SpriteEffects.FlipHorizontally, 0);
                     break;
 
             }
