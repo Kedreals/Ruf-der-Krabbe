@@ -89,7 +89,7 @@ namespace Call_of_Crabs
                     }
                     else if (c == Color.Red)
                     {
-                        Tiles[i * bitmap.Width + j] = new Tile(TileType.TrapTile, new Vector2(j * Tile.DefaultSize.X, i * Tile.DefaultSize.Y), isHostile: true, damage: 10);
+                        Tiles[i * bitmap.Width + j] = new Tile(TileType.TrapTile, new Vector2(j * Tile.DefaultSize.X, i * Tile.DefaultSize.Y), isHostile: true, damage: 1);
                         Tiles[i * bitmap.Width + j].SetTexture(texTrap);
                     }
                 }
