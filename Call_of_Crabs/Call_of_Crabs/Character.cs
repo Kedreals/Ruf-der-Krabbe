@@ -51,6 +51,8 @@ namespace Call_of_Crabs
 
         public virtual float ReaktionRadius { get; protected set; } = 0;
 
+        public virtual bool IsBoss { get { return false; } }
+
         public virtual void Die()
         {
             dead = true;

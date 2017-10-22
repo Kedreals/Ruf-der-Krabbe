@@ -46,6 +46,7 @@
     <Compile Include="Background.cs" />
     <Compile Include="BulletsEverywhere.cs" />
     <Compile Include="Character.cs" />
+    <Compile Include="Cthulhu.cs" />
     <Compile Include="EnemyHandler.cs" />
     <Compile Include="GameStates\Lost.cs" />
     <Compile Include="Jellyfish.cs" />
