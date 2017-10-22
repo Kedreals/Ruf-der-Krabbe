@@ -11,8 +11,8 @@ namespace Call_of_Crabs
 {
     public class KritzlerEnemy: Character
     {
-        public Texture2D texture;
-
+        public Texture2D death;
+        public Animation animation;
         
         float horizontalSpeed = 1.0f;
         public override float ReaktionRadius { get; protected set; }
@@ -77,7 +77,8 @@ namespace Call_of_Crabs
 
         public override void Load(ContentManager contentManager, string filename)
         {
-            texture = contentManager.Load<Texture2D>("Textures/" + "Kitzler");
+            death = contentManager.Load<Texture2D>("Textures/" + "DeadKritzler");
+            animation = new Animation(contentManager, "Kitzler", 3, 3);
         }
 
         public override void Update(GameTime time)
@@ -89,8 +90,9 @@ namespace Call_of_Crabs
 
         public override void Draw(SpriteBatch batch)
         {
-            if (faces == facing.right) batch.Draw(texture, sprite, Color.White);
-            else batch.Draw(texture, sprite, null, Color.White, 0, new Vector2(0, 0), SpriteEffects.FlipHorizontally, 0);
+            if (dead) batch.Draw(death, sprite, Color.White);
+            else if (faces == facing.right) animation.Draw(batch, sprite, Color.White);
+            else animation.Draw(batch, sprite, null, Color.White, 0, new Vector2(0, 0), SpriteEffects.FlipHorizontally, 0);
         }
 
 

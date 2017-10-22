@@ -59,6 +59,9 @@ namespace Call_of_Crabs.GameStates
 
         public EGameState Update(GameTime time)
         {
+            if (!character.sprite.Intersects(mapRectangle))
+                return EGameState.Lost;
+
             character.Update(time);
 
             enemyHandler.Update(time);

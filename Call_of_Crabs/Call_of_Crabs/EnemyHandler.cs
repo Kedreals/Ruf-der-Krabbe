@@ -172,7 +172,8 @@ namespace Call_of_Crabs
         {
             for (int i = 0; i < m_Characters.Count; ++i)
             {
-
+                if (m_Characters[i].dead)
+                    continue;
 
                 if (m_t[i] > 1)
                 {
