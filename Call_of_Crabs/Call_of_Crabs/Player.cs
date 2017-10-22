@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -71,10 +72,19 @@ namespace Call_of_Crabs
             Kanonetexture.Update(time);
             Seesterntexture.Update(time);
 
-            if (Controls.GetKey(Controls.EKey.Up).IsPressed())
-                Position += new Vector2(0, -150f) * (float)time.ElapsedGameTime.TotalSeconds;
+            if (Controls.GetKey(Controls.EKey.Up).HasJustBeenPressed() && jumpcount < 2)
+            {
+                isJumping = true;
+                currjumpduration = 0;
+                currjumpheight = 0;
+                jumpcount += 1;
+            }
             if (Controls.GetKey(Controls.EKey.Down).IsPressed())
+            {
                 Position += new Vector2(0, 150f) * (float)time.ElapsedGameTime.TotalSeconds;
+                isJumping = false;
+            }
+               
             if (Controls.GetKey(Controls.EKey.Left).IsPressed())
             {
                 SetAnimations(1);
@@ -90,6 +100,7 @@ namespace Call_of_Crabs
                 SetAnimations(0);
             }
 
+
             if (Controls.GetKey(Controls.EKey.firstweapon).IsPressed())
                 currentweapon = weapon.revolver;
             if (Controls.GetKey(Controls.EKey.secondweapon).IsPressed())
@@ -100,7 +111,7 @@ namespace Call_of_Crabs
             shotCooldown -= time.ElapsedGameTime.TotalSeconds;
             if (shotCooldown < 0) shotCooldown = -0.1;
 
-            if (Controls.GetKey(Controls.EKey.Jump).IsPressed())
+            if (Controls.GetKey(Controls.EKey.Shoot).IsPressed())
             {
                 if (shotCooldown < 0)
                 {
@@ -125,8 +136,15 @@ namespace Call_of_Crabs
                 
             }
 
-            //schwerkraft
-            Position += new Vector2(0, 10f) * (float)time.ElapsedGameTime.TotalSeconds;
+            if (isJumping)
+            {
+                Jump(time);
+            }
+            else
+            {
+                //schwerkraft
+                Position += new Vector2(0, 100f) * (float)time.ElapsedGameTime.TotalSeconds;
+            }
 
         }
 

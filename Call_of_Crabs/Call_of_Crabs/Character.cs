@@ -23,6 +23,8 @@ namespace Call_of_Crabs
         public Vector2 offsetRight;
         public Vector2 offsetLeft;
 
+        public float Speed;
+
         public enum facing
         {
                left,
@@ -38,6 +40,27 @@ namespace Call_of_Crabs
         private Vector2 lastpos;
 
         private float threshold = 0;
+
+        protected float jumpheight = 70f;
+        protected float currjumpduration = 0f;
+        protected float currjumpheight = 0;
+        protected float jumpspeed = 300;
+        protected int jumpcount = 0;
+        protected bool isJumping = false;
+        protected float jumpduration = 0.5f;
+
+        public void Jump(GameTime time)
+        {
+            currjumpduration += (float)time.ElapsedGameTime.TotalSeconds;
+            float dy = 2 * (jumpheight / (jumpduration * jumpduration)) * (currjumpduration - jumpduration);
+
+            Position += new Vector2(0, dy)*(float)time.ElapsedGameTime.TotalSeconds;
+
+            currjumpheight -= dy*(float)time.ElapsedGameTime.TotalSeconds;
+
+            if (currjumpheight > jumpheight - 0.1f)
+                isJumping = false;
+        }
 
         public Vector2 Position
         {
@@ -86,6 +109,17 @@ namespace Call_of_Crabs
     
         public abstract void Draw(SpriteBatch batch);
 
+        /// <summary>
+        /// moves this character in the direction of the target.
+        /// Returns bool if the target is reached in the next tick
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public virtual bool Move(Vector2 target, GameTime time)
+        {
+            return false;
+        }
+
         public void getHit(int damage)
         {
             hitpoints -= damage;
@@ -94,17 +128,16 @@ namespace Call_of_Crabs
 
         public void Collide(Map map)
         {
-
-            
-
-
             foreach (Tile tile in map.Tiles)
             {
-                if (tile != null)
+                if (tile != null && tile.Type != TileType.DecorationTile)
                 {
                     Rectangle t;
 
                     Rectangle.Intersect(ref collision, ref tile.TileRectangle, out t);
+
+                    if(t.Height == 0 && t.Width == 0)
+                        continue;
 
                     if (t.Width < t.Height)
                     {
@@ -126,14 +159,21 @@ namespace Call_of_Crabs
                         int sign = Math.Sign(Position.Y - tile.Position.Y);
                         if (tile.Type == TileType.SurfaceTile)
                         {
-                            if (t.Height < 5 && sign < 0)
+                            if (t.Height < 10 && sign < 0)
                             {
                                 Position = Position + sign * new Vector2(0, t.Height);
+                                jumpcount = 0;
+                                isJumping = false;
                             }
                         }
                         else
                         {
+                            if (sign < 0)
+                            {
+                                jumpcount = 0;
+                            }
                             Position = Position + sign * new Vector2(0, t.Height);
+                            isJumping = false;
                         }
                     }
 

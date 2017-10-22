@@ -15,8 +15,8 @@ namespace Call_of_Crabs.GameStates
         private Map map = new Map();
         private Rectangle mapRectangle;
         
-
-        List<Character> character = new List<Character>();
+        Player character;
+        private EnemyHandler enemyHandler;
 
         private Camera2D camera;
 
@@ -41,40 +41,39 @@ namespace Call_of_Crabs.GameStates
             Point loc = new Point(0, 0);//map.Tiles[0].Position.ToPoint();
             Point size = new Point((int)(map.XDim * tileSize.X), (int)(map.YDim * tileSize.Y));
             mapRectangle = new Rectangle(loc, size);
-
         }
 
         public void LoadContent(ContentManager contentManager)
         {
             background = new Background(contentManager, new string[] { "WaterBackgroundTexture", "FishBackgroundTexture" });
-            map.Load(contentManager, "TestMap");
-            character.Add(new Player());
-            character.Add(new KritzlerEnemy());
-            foreach (Character c in character)
-            {
-                c.Load(contentManager, "");
-            }
+            map.Load(contentManager, "TestMap2");
+            Player player = new Player();
+            player.Load(contentManager, "");
+            //KritzlerEnemy kritzler = new KritzlerEnemy();
+            player.Position = new Vector2(700, 550);//new Vector2(1, 18) * Tile.DefaultSize;
+            //kritzler.Position = new Vector2(4, 15) * Tile.DefaultSize;
+            character = player;
             BulletsEverywhere.Load(contentManager);
             character.ElementAt(1).Position = new Vector2(100, 100);
+            enemyHandler = new EnemyHandler(contentManager, Level.FirstLevel);
         }
 
         public EGameState Update(GameTime time)
         {
-            foreach(Character c in character)
-            {
-                c.Update(time);
-            }
+            character.Update(time);
 
-            BulletsEverywhere.Update(time, map, character);
-            
-            foreach(Character c in character)
-            {
-                c.Collide(map);
-            }
+            enemyHandler.Update(time);
 
+            List<Character> c = enemyHandler.List;
+            c.Add(character);
 
+            BulletsEverywhere.Update(time, map, c);
 
-            camera.Position = character.ElementAt(0).collision.Center.ToVector2();
+            character.Collide(map);
+
+            enemyHandler.Collide(map);
+
+            camera.Position = character.collision.Center.ToVector2();
             camera.SetVisibilityContainedIn(mapRectangle);
 
             return EGameState.InGame;
@@ -88,10 +87,8 @@ namespace Call_of_Crabs.GameStates
 
             map.Draw(batch);
             BulletsEverywhere.Draw(batch);
-            foreach(Character c in character)
-            {
-                c.Draw(batch);
-            }
+            enemyHandler.Draw(batch);
+            character.Draw(batch);
 
             batch.End();
         }
