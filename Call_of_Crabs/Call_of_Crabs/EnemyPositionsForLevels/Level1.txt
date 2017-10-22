@@ -8,16 +8,16 @@ Kritzler: 79, 11, 79, 11
 Kritzler: 99, 10, 99, 10
 Kritzler: 82, 17, 82, 17
 Kritzler: 74, 18, 74, 18
-Cthulhu: 6,3
+//Cthulhu: 6,3
 Jelly: 7, 3, 11, 3, 11, 8
 Jelly: 29, 9, 29, 13
-Jelly: 71, 5, 71, 5
+Jelly: 72, 5, 72, 7
 Jelly: 110, 10, 110, 10
 Jelly: 38, 6, 38, 6
 Kraken: 54, 4, 59, 4, 59, 7
 Kraken: 92, 12, 96, 15
 Kraken: 98, 2, 98, 2
 Rainbow: 43, 3, 46, 8
-Rainbow: 84, 3, 84, 9
+Rainbow: 84, 3, 82, 9
 Rainbow: 37, 16 ,37, 18
 Cthulhu: 121,9, 121, 9
