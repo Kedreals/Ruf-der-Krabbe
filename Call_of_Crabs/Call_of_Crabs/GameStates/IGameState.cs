@@ -17,7 +17,7 @@ namespace Call_of_Crabs.GameStates
         //Options,
         InGame,
         //Credits,
-
+        Lost,
 
         Count
     }

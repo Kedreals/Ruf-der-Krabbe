@@ -427,18 +427,6 @@
 /processorParam:TextureFormat=Color
 /build:Textures/DeadQualle.png
 
-#begin Textures/Deadscreen.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Textures/Deadscreen.png
-
 #begin Textures/QualleTexture1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -511,6 +499,7 @@
 /processorParam:TextureFormat=Color
 /build:Textures/StoneTexture.png
 
+
 #begin Textures/TrapTileTexture.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -529,3 +518,14 @@
 /processorParam:DebugMode=Auto
 /build:Effects/Wobble.fx
 
+#begin Textures\Deadscreen1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures\Deadscreen1.png

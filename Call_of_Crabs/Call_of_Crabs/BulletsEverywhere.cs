@@ -262,7 +262,6 @@ namespace Call_of_Crabs
 
         }
 
-
         public static void Draw(SpriteBatch batch)
         {
             for (uint i = 0; i < numberofBullets; ++i)

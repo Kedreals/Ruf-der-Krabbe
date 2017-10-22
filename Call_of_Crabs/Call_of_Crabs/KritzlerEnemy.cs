@@ -13,14 +13,16 @@ namespace Call_of_Crabs
     {
         public Texture2D texture;
 
-        float verticalSpeed = 101.0f;
+        
         float horizontalSpeed = 1.0f;
+        public override float ReaktionRadius { get; protected set; }
+
 
 
 
         public KritzlerEnemy(): base(new Rectangle(15, 15, 70, 70), new Rectangle(0, 0, 100, 100),5)
         {
-            
+            ReaktionRadius = 4 * Tile.DefaultSize.X;
         }
 
         public override bool Move(Vector2 target, GameTime time)
@@ -30,12 +32,21 @@ namespace Call_of_Crabs
             float verticalDot = Vector2.Dot(d, new Vector2(0, 1));
             float horizontalDot = Vector2.Dot(d, new Vector2(1, 0));
 
-            bool res = Math.Abs(verticalDot) <= verticalSpeed && Math.Abs(horizontalDot) <= horizontalSpeed;
+            bool res = /*Math.Abs(verticalDot) <= verticalSpeed &&*/ Math.Abs(horizontalDot) <= horizontalSpeed;
 
-            if (verticalDot > verticalSpeed)
-                d.Y = verticalSpeed;
-            if (verticalDot < -verticalSpeed)
-                d.Y = -verticalSpeed;
+            d.Y = 0;
+            if(verticalDot < 0 && jumpcount < 2 && !isJumping)
+            {
+                isJumping = true;
+                currjumpduration = 0;
+                jumpcount++;
+                currjumpheight = 0;
+            }
+
+            if (isJumping)
+                Jump(time);
+            
+
             if (horizontalDot > horizontalSpeed)
                 d.X = horizontalSpeed;
             if (horizontalDot < horizontalSpeed)
@@ -46,6 +57,24 @@ namespace Call_of_Crabs
             return res;
         }
 
+        public override void ReactToPlayer(GameTime time, Vector2 playerPos)
+        {
+            Move(playerPos, time);
+            Shoot(playerPos, time);
+        }
+
+        double shotCooldown = 0.0;
+
+        private void Shoot(Vector2 target, GameTime time)
+        {
+            shotCooldown -= time.ElapsedGameTime.TotalSeconds;
+            if (shotCooldown < 0)
+            {
+                BulletsEverywhere.SpawnBullet(new Vector2((faces == facing.right) ? (collision.X + collision.Width + 2) : collision.X - 20, collision.Y + 10), (faces == facing.right), BulletsEverywhere.BulletType.revolver);
+                shotCooldown += 0.5;
+            }
+        }
+
         public override void Load(ContentManager contentManager, string filename)
         {
             texture = contentManager.Load<Texture2D>("Textures/" + "Kitzler");
@@ -53,15 +82,15 @@ namespace Call_of_Crabs
 
         public override void Update(GameTime time)
         {
-
-            //schwerkraft
-            Position += new Vector2(0, 100f) * (float)time.ElapsedGameTime.TotalSeconds;
+            if (!isJumping)
+                Position += new Vector2(0, 100f) * (float)time.ElapsedGameTime.TotalSeconds;
 
         }
 
         public override void Draw(SpriteBatch batch)
-        {          
-             batch.Draw(texture, sprite, Color.White);
+        {
+            if (faces == facing.right) batch.Draw(texture, sprite, Color.White);
+            else batch.Draw(texture, sprite, null, Color.White, 0, new Vector2(-sprite.Width/2, 0), SpriteEffects.FlipHorizontally, 0);
         }
 
 

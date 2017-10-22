@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -104,9 +105,12 @@ namespace Call_of_Crabs
 
         public List<Character> List { get { return new List<Character>(m_Characters); } }
 
+        private Player m_player;
+
         
-        public EnemyHandler(ContentManager content, Level level)
+        public EnemyHandler(ContentManager content, Level level, Player player)
         {
+            m_player = player;
             switch(level)
             {
                 case Level.FirstLevel:
@@ -116,16 +120,52 @@ namespace Call_of_Crabs
                 default:
                     return;
             }
+            for(int i = 0; i < m_Characters.Count; ++i)
+            {
+                m_Characters[i].Position = m_Paths[i][0];
+            }
+        }
+
+        private Path LoadPath(string values)
+        {
+            values = values.Replace(" ", "");
+            string[] v = values.Split(',');
+
+            if(v.Length%2 != 0)
+            {
+                Console.WriteLine("ERRORRRRRRRRRRRRR!!!!!!");
+            }
+
+            Vector2[] va = new Vector2[v.Length/2];
+
+            for (int i = 0; i < va.Length; ++i)
+            {
+                va[i] = new Vector2(float.Parse(v[2 * i]), float.Parse(v[2 * i + 1]))*Tile.DefaultSize;
+            }
+
+            return new Path(va);
         }
 
         private void LoadFirstLevel(ContentManager content)
         {
-            m_forwardBackward.Add(1);
-            m_t.Add(0);
-            m_Characters.Add(new KritzlerEnemy());
-            m_Characters[0].Load(content, "");
-            m_Characters[0].Position = new Vector2(700, 450);
-            m_Paths.Add(new Path(new Vector2[] { new Vector2(700, 450), new Vector2(900, 450), new Vector2(900,250) }));
+            StreamReader streamReader = new StreamReader("EnemyPositionsForLevels/Level1.txt");
+
+            while(!streamReader.EndOfStream)
+            {
+                string line = streamReader.ReadLine();
+                if (line.StartsWith("//"))
+                    continue;
+
+                if(line.StartsWith("Kritzler"))
+                {
+                    Character c = new KritzlerEnemy();
+                    c.Load(content, "");
+                    m_Characters.Add(c);
+                    m_t.Add(0);
+                    m_forwardBackward.Add(1);
+                    m_Paths.Add(LoadPath(line.Split(':')[1]));
+                }
+            }
         }
 
         public void Update(GameTime time)
@@ -145,7 +185,14 @@ namespace Call_of_Crabs
                     m_forwardBackward[i] = 1;
                 }
 
-                if (m_Characters[i].Move(m_Paths[i][m_t[i]], time))
+                Vector2 target = m_Paths[i][m_t[i]];
+
+                if((m_player.Position-m_Characters[i].Position).LengthSquared() <= m_Characters[i].ReaktionRadius*m_Characters[i].ReaktionRadius)
+                {
+                    target = m_player.Position;
+                    m_Characters[i].ReactToPlayer(time, target);
+                }
+                else if (m_Characters[i].Move(target, time))
                     m_t[i] += m_forwardBackward[i] * 0.1f;
 
                 m_Characters[i].Update(time);

@@ -49,6 +49,18 @@ namespace Call_of_Crabs
         protected bool isJumping = false;
         protected float jumpduration = 0.5f;
 
+        public virtual float ReaktionRadius { get; protected set; } = 0;
+
+        public virtual void Die()
+        {
+            dead = true;
+        }
+
+        public virtual void ReactToPlayer(GameTime time, Vector2 playerPos)
+        {
+
+        }
+
         public void Jump(GameTime time)
         {
             currjumpduration += (float)time.ElapsedGameTime.TotalSeconds;
@@ -58,7 +70,7 @@ namespace Call_of_Crabs
 
             currjumpheight -= dy*(float)time.ElapsedGameTime.TotalSeconds;
 
-            if (currjumpheight > jumpheight - 0.1f)
+            if (dy > 0)
                 isJumping = false;
         }
 
@@ -71,9 +83,9 @@ namespace Call_of_Crabs
                 position = value;
                 collision.Location = position.ToPoint();
                 threshold += (lastpos.X - position.X);
-                if (threshold >= 2) { faces = facing.left; threshold = 0; }
-                else if (threshold <= -2) { faces = facing.right; threshold = 0; }
-                if(faces==facing.right)sprite.Location = collision.Location + offsetRight.ToPoint();
+                if (threshold >= 2) { faces = facing.left; threshold = 2; }
+                else if (threshold <= -2) { faces = facing.right; threshold = -2; }
+                if (faces == facing.right) sprite.Location = collision.Location + offsetRight.ToPoint();
                 else sprite.Location = collision.Location + offsetLeft.ToPoint();
             }
         }
@@ -93,12 +105,17 @@ namespace Call_of_Crabs
             basecollision = collisionBox;
             basesprite = spritearea;
             offsetRight = (basesprite.Location - basecollision.Location).ToVector2();
-            offsetLeft = new Vector2(basesprite.Width - (basecollision.X + basecollision.Width), offsetRight.Y);
+
+            offsetRight = new Vector2(basesprite.X - basecollision.X, basesprite.Y - basecollision.Y);
+            offsetLeft = new Vector2((basesprite.X+basesprite.Width) - (basecollision.X + 2*basecollision.Width),offsetRight.Y);
+
             collision = basecollision;
             sprite = basesprite;
-            Position = new Vector2(0, 0);
+            position = new Vector2(0, 0);
             hitpoints = hits;
         }
+
+    
 
 
         public abstract void Load(ContentManager contentManager, string filename);
@@ -130,7 +147,7 @@ namespace Call_of_Crabs
         {
             foreach (Tile tile in map.Tiles)
             {
-                if (tile != null && tile.Type != TileType.DecorationTile)
+                if (tile != null && tile.Type!=TileType.DecorationTile)
                 {
                     Rectangle t;
 
@@ -142,39 +159,20 @@ namespace Call_of_Crabs
                     if (t.Width < t.Height)
                     {
                         int sign = Math.Sign(Position.X - tile.Position.X);
-                        if (tile.Type == TileType.SurfaceTile)
-                        {
-                            if (t.Width < 5)
-                            {
-                                Position = Position + sign * new Vector2(t.Width, 0);
-                            }
-                        }
-                        else
-                        { 
-                            Position = Position + sign * new Vector2(t.Width, 0);
-                        }
+                        Position = Position + sign * new Vector2(t.Width, 0);
+                        
                     }
                     else
                     {
                         int sign = Math.Sign(Position.Y - tile.Position.Y);
                         if (tile.Type == TileType.SurfaceTile)
+                        if (sign < 0)
                         {
-                            if (t.Height < 10 && sign < 0)
-                            {
-                                Position = Position + sign * new Vector2(0, t.Height);
-                                jumpcount = 0;
-                                isJumping = false;
-                            }
+                            jumpcount = 0;
                         }
-                        else
-                        {
-                            if (sign < 0)
-                            {
-                                jumpcount = 0;
-                            }
-                            Position = Position + sign * new Vector2(0, t.Height);
-                            isJumping = false;
-                        }
+                        Position = Position + sign * new Vector2(0, t.Height);
+                        isJumping = false;
+                        
                     }
 
 

@@ -60,8 +60,7 @@ namespace Call_of_Crabs.GameStates
             character = player;
             BulletsEverywhere.Load(contentManager);
             
-            enemyHandler = new EnemyHandler(contentManager, Level.FirstLevel);
-
+            enemyHandler = new EnemyHandler(contentManager, Level.FirstLevel, player);
             effect = contentManager.Load<Effect>("Effects/Wobble");
             effect.CurrentTechnique = effect.Techniques[0];
         }
@@ -85,6 +84,8 @@ namespace Call_of_Crabs.GameStates
             camera.SetVisibilityContainedIn(mapRectangle);
 
             effect.Parameters["Time"].SetValue((float)time.TotalGameTime.TotalSeconds);
+            if (character.dead)
+                return EGameState.Lost;
 
             return EGameState.InGame;
         }
